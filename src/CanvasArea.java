@@ -20,6 +20,7 @@ public class CanvasArea extends JPanel {
     private CanvasArea _canvas;
 	private Vector _shapes = new Vector();
 	private Shape _selectedShape;
+	private Mode _mode;
 	
     double w, h;
     
@@ -28,8 +29,8 @@ public class CanvasArea extends JPanel {
     
     public CanvasArea() {
       _canvas = this;
+      _mode = new SelectMode(_canvas);
       
-     
       w = 100;
       h = 75;
       
@@ -37,6 +38,10 @@ public class CanvasArea extends JPanel {
       MyMouseListener listener = new MyMouseListener();
       addMouseListener(listener);
       addMouseMotionListener(listener);
+    }
+    
+    public void changeMode(Mode mode) {
+    	_mode = mode;
     }
     
     public Shape getContainedShape(int x, int y) {
@@ -96,61 +101,34 @@ public class CanvasArea extends JPanel {
         //location.setText(locString);
     }
 
+    public void drawShape(Shape shape) {
+      if (shape != null)
+        _shapes.addElement(shape);
+    }
+    
+    public Shape moveShape(Shape shape, double toX, double toY, double width, double height) {
+      _shapes.remove(shape);
+      shape = new Rectangle2D.Double(toX, toY, width, height);
+      _shapes.addElement(shape);
+      return shape;
+    }
     class MyMouseListener extends MouseAdapter {
-        private int _pressX, _pressY;
-  
+
         public void mouseMoved(MouseEvent e) {
-      	  int clickX = e.getX();
-          int clickY = e.getY();
-      	  _selectedShape = getContainedShape(clickX, clickY);
-          if (_selectedShape != null) { 
-              curCursor = Cursor
-                  .getPredefinedCursor(Cursor.HAND_CURSOR);
-          } else {
-              curCursor = Cursor.getDefaultCursor();
-          }
-          _canvas.repaint();
+          _mode.onMoved(e); 
         }
         
 	
         public void mousePressed(MouseEvent e) {
-          _pressX = e.getX();
-    	  _pressY = e.getY();
-    	  
-    	  _selectedShape = getContainedShape(_pressX, _pressY);
-    	
-    	  if (_selectedShape == null) {
-    		_selectedShape = new Rectangle2D.Double(_pressX, _pressY, w, h);
-    		_shapes.addElement(_selectedShape);		
-    	  }
-        
-          _canvas.repaint();
+          _mode.onPressed(e);
         }
         
         public void mouseDragged(MouseEvent e) {
-          if (_selectedShape != null) {
-            int toX = e.getX();
-            int toY = e.getY();
-    
-            double originX = _selectedShape.getBounds2D().getX();
-            double originY = _selectedShape.getBounds2D().getY();
-            double originWidth = _selectedShape.getBounds2D().getWidth();
-            double originHeight = _selectedShape.getBounds2D().getHeight();
-            double dragX = toX - _pressX;             
-            double dragY = toY - _pressY;
-              
-            _pressX = toX;
-            _pressY = toY;
-               
-            _shapes.remove(_selectedShape);
-            _selectedShape = new Rectangle2D.Double(originX + dragX, originY + dragY, originWidth, originHeight);
-            _shapes.add(_selectedShape);
-          }
-        	  
-          _canvas.repaint();
+          _mode.onDragged(e);
         }
         
         public void mouseReleased(MouseEvent e) {
+          _mode.onReleased(e);
 //        if (ellipse.contains(e.getX(), e.getY())) {
 //          
 //          selectedShape = ellipse;
@@ -175,63 +153,5 @@ public class CanvasArea extends JPanel {
     }
     
     
-//    class MyMouseMotionListener extends MouseMotionAdapter {
-//      public void mouseDragged(MouseEvent e) {
-////        if (ellipse.contains(e.getX(), e.getY())) {
-////          
-////          selectedShape = ellipse;
-////          x2 = e.getX();
-////          y2 = e.getY();
-////          x = x + x2 - x1;
-////          y = y + y2 - y1;
-////          x1 = x2;
-////          y1 = y2;
-////        }
-////        if (selectedShape != null)
-////          displayParameters(selectedShape);
-////        canvas.repaint();
-//    	 
-//    	  if (selectedShape != null) {
-//    		
-//            int x2 = e.getX();
-//            int y2 = e.getY();
-//            
-//            
-//            double originX = selectedShape.getBounds2D().getX();
-//            double originY = selectedShape.getBounds2D().getY();
-//            double originWidth = selectedShape.getBounds2D().getWidth();
-//            double originHeight = selectedShape.getBounds2D().getHeight();
-//            
-//            double dragX = x2 - x1;
-//            double dragY = y2 - y1;
-//           
-//            
-//            x1 = x2;
-//            y1 = y2;
-//            
-//            shapes.remove(selectedShape);
-//      	    selectedShape = new Rectangle2D.Double(originX + dragX, originY + dragY, originWidth, originHeight);
-//      	    shapes.add(selectedShape);
-//    	  }
-//    	  
-//    	  canvas.repaint();
-//      }
-//
-//      public void mouseMoved(MouseEvent e) {
-//    	int clickX = e.getX();
-//      	int clickY = e.getY();
-//      	
-//    	selectedShape = getContainedShape(clickX, clickY);
-//        if (selectedShape != null) { 
-//          
-//            curCursor = Cursor
-//                .getPredefinedCursor(Cursor.HAND_CURSOR);
-//           
-//        } else {
-//            curCursor = Cursor.getDefaultCursor();
-//        }
-//        canvas.repaint();
-//      }
-//    }
-  
+//    
 }
