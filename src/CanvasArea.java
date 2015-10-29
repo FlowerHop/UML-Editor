@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 
 public class CanvasArea extends JPanel {
-    private CanvasArea context;
+    private CanvasArea canvas;
 	private Vector<Shape> shapes;
 	private Shape selectedShape;
 	
@@ -26,7 +26,7 @@ public class CanvasArea extends JPanel {
     Cursor curCursor;
     
     public CanvasArea() {
-      context = this;
+      canvas = this;
       shapes = new Vector<Shape>();
       
      
@@ -116,7 +116,7 @@ public class CanvasArea extends JPanel {
             shapes.add(selectedShape);
       	  }
       	  
-      	  context.repaint();
+      	  canvas.repaint();
         }
 
         public void mouseMoved(MouseEvent e) {
@@ -129,7 +129,7 @@ public class CanvasArea extends JPanel {
           } else {
               curCursor = Cursor.getDefaultCursor();
           }
-          context.repaint();
+          canvas.repaint();
         }
         
 	
@@ -144,7 +144,7 @@ public class CanvasArea extends JPanel {
     		shapes.addElement(selectedShape);		
     	  }
         
-          context.repaint();
+          canvas.repaint();
           x1 = clickX;
           y1 = clickY;
         }
@@ -157,7 +157,7 @@ public class CanvasArea extends JPanel {
 //          displayParameters(selectedShape);
 //        }
 //
-//        context.repaint();
+//        canvas.repaint();
         }
 
         public void mouseClicked(MouseEvent e) {
@@ -168,7 +168,7 @@ public class CanvasArea extends JPanel {
 //
 //          displayParameters(selectedShape);
 //        } 
-//        context.repaint();
+//        canvas.repaint();
     	  
         }
     }
@@ -188,7 +188,7 @@ public class CanvasArea extends JPanel {
 ////        }
 ////        if (selectedShape != null)
 ////          displayParameters(selectedShape);
-////        context.repaint();
+////        canvas.repaint();
 //    	 
 //    	  if (selectedShape != null) {
 //    		
@@ -213,7 +213,7 @@ public class CanvasArea extends JPanel {
 //      	    shapes.add(selectedShape);
 //    	  }
 //    	  
-//    	  context.repaint();
+//    	  canvas.repaint();
 //      }
 //
 //      public void mouseMoved(MouseEvent e) {
@@ -229,7 +229,7 @@ public class CanvasArea extends JPanel {
 //        } else {
 //            curCursor = Cursor.getDefaultCursor();
 //        }
-//        context.repaint();
+//        canvas.repaint();
 //      }
 //    }
   

@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 
 public class SelectMode extends Mode {
 	private Shape _selectedShape;
-	private CanvasArea _context;
+	private CanvasArea _canvas;
 
 	@Override
 	void onPressed(MouseEvent e) {
