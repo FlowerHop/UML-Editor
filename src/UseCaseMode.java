@@ -1,12 +1,11 @@
 import java.awt.Cursor;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 
-
-
-public class SelectMode extends Mode {
+public class UseCaseMode extends Mode {
 	private Shape _selectedShape;
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
@@ -14,7 +13,7 @@ public class SelectMode extends Mode {
 	int w = 100;
 	int h = 75;
 
-	public SelectMode(CanvasArea canvas) {
+	public UseCaseMode (CanvasArea canvas) {
 		_canvas = canvas;
 		
 	}
@@ -22,7 +21,7 @@ public class SelectMode extends Mode {
 	@Override
 	void onPressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-	  System.out.println("SelectMode");
+	  System.out.println("UseCaseMode");
 		
 	  _pressX = e.getX();
   	  _pressY = e.getY();
@@ -30,7 +29,7 @@ public class SelectMode extends Mode {
   	  _selectedShape = _canvas.getContainedShape(_pressX, _pressY);
   	
   	  if (_selectedShape == null) {
-  		_selectedShape = new Rectangle2D.Double(_pressX, _pressY, w, h);
+  		_selectedShape = new Ellipse2D.Double(_pressX, _pressY, w, h);
   		_canvas.drawShape(_selectedShape);		
   	  }
       

@@ -1,12 +1,15 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
 public class MainPanel extends JPanel{
+	private final int MODES_NUM = 6;
 	private JButton _btnSelect;
     private JButton _btnAssociation;
     private JButton _btnGeneralization;
@@ -15,6 +18,8 @@ public class MainPanel extends JPanel{
     private JButton _btnUseCase;
 
     private CanvasArea _canvas;
+    
+    private Mode[] _modes = new Mode[MODES_NUM];
     
 	public MainPanel() {
 		initComponents();
@@ -30,6 +35,28 @@ public class MainPanel extends JPanel{
 	  _btnUseCase = new JButton("Use Case");
 	    
 	  _canvas = new CanvasArea();
+	  
+	  _btnSelect.addActionListener(new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if (_modes[0] == null)
+			  _modes[0] = new SelectMode(_canvas);
+			
+			_canvas.changeMode(_modes[0]);
+		}});
+	  
+	  _btnUseCase.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (_modes[5] == null)
+				  _modes[5] = new UseCaseMode(_canvas);
+				
+				_canvas.changeMode(_modes[5]);
+			}});
 	}
 	
 	private void initLayoutConstraints() {
@@ -113,4 +140,6 @@ public class MainPanel extends JPanel{
 	    this.add(_canvas, bagCanvas);
 	}
 
+	
+	
 }

@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RectangularShape;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -29,7 +30,6 @@ public class CanvasArea extends JPanel {
     
     public CanvasArea() {
       _canvas = this;
-      _mode = new SelectMode(_canvas);
       
       w = 100;
       h = 75;
@@ -107,28 +107,32 @@ public class CanvasArea extends JPanel {
     }
     
     public Shape moveShape(Shape shape, double toX, double toY, double width, double height) {
-      _shapes.remove(shape);
-      shape = new Rectangle2D.Double(toX, toY, width, height);
-      _shapes.addElement(shape);
+      
+      ((RectangularShape)shape).setFrame(toX, toY, width, height);
+      
       return shape;
     }
     class MyMouseListener extends MouseAdapter {
 
         public void mouseMoved(MouseEvent e) {
-          _mode.onMoved(e); 
+          if (_mode != null)
+            _mode.onMoved(e); 
         }
         
 	
         public void mousePressed(MouseEvent e) {
-          _mode.onPressed(e);
+          if (_mode != null)
+            _mode.onPressed(e);
         }
         
         public void mouseDragged(MouseEvent e) {
-          _mode.onDragged(e);
+          if (_mode != null)
+            _mode.onDragged(e);
         }
         
         public void mouseReleased(MouseEvent e) {
-          _mode.onReleased(e);
+          if (_mode != null)
+            _mode.onReleased(e);
 //        if (ellipse.contains(e.getX(), e.getY())) {
 //          
 //          selectedShape = ellipse;
