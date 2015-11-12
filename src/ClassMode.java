@@ -5,7 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 
-public class UseCaseMode extends Mode {
+public class ClassMode extends Mode {
 	// maybe it doesn't need to be a global
 	private Shape _selectedShape;
 	
@@ -15,15 +15,15 @@ public class UseCaseMode extends Mode {
 	int w = 100;
 	int h = 75;
 
-	public UseCaseMode (CanvasArea canvas) {
-		_canvas = canvas;
+	public ClassMode(CanvasArea canvas) {
+	  _canvas = canvas;
 		
 	}
 	
 	@Override
 	void onPressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-	  System.out.println("UseCaseMode");
+	  System.out.println("ClassMode");
 		
 //	  _pressX = e.getX();
 //  	  _pressY = e.getY();
@@ -31,7 +31,7 @@ public class UseCaseMode extends Mode {
 //  	  _selectedShape = _canvas.getContainedShape(_pressX, _pressY);
 //  	
 //  	  if (_selectedShape == null) {
-//  		_selectedShape = new Ellipse2D.Double(_pressX, _pressY, w, h);
+//  		_selectedShape = new Rectangle2D.Double(_pressX, _pressY, w, h);
 //  		_canvas.drawShape(_selectedShape);		
 //  	  }
 //      
@@ -39,14 +39,14 @@ public class UseCaseMode extends Mode {
 	  _pressX = e.getX();
 	  _pressY = e.getY();
 	  
-	  _canvas.drawShape(new Ellipse2D.Double(_pressX, _pressY, w, h));
+	  _canvas.drawShape(new Rectangle2D.Double(_pressX, _pressY, w, h));
 	  _canvas.repaint();
 		
 	}
 
 	@Override
 	void onDragged(MouseEvent e) {
-		
+			
 	}
 
 	@Override

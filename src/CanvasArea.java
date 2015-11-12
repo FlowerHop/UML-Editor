@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 
 
 public class CanvasArea extends JPanel {
+	private final int PORTS_SIZE = 10;
+	
     private CanvasArea _canvas;
 	private Vector _shapes = new Vector();
 	private Shape _selectedShape;
@@ -70,6 +72,17 @@ public class CanvasArea extends JPanel {
       
       if (curCursor != null)
         setCursor(curCursor);
+    }
+    
+    public void drawConnectionPorts(Shape shape) {
+      Rectangle2D bounds = shape.getBounds2D();
+      double x = bounds.getX();
+      double y = bounds.getY();
+    	
+      //TODO draw a shape I customize
+      System.out.println("draw Connection Ports");
+    	
+    	
     }
     
     public void drawHighlightSquares(Graphics2D g2D, Rectangle2D r) {

@@ -37,26 +37,40 @@ public class MainPanel extends JPanel{
 	  _canvas = new CanvasArea();
 	  
 	  _btnSelect.addActionListener(new ActionListener() {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			if (_modes[0] == null)
-			  _modes[0] = new SelectMode(_canvas);
+		  // TODO Auto-generated method stub
+		  if (_modes[0] == null)
+			_modes[0] = new SelectMode(_canvas);
 			
-			_canvas.changeMode(_modes[0]);
-		}});
+		  _canvas.changeMode(_modes[0]);
+		}
+	  });
+	  
+	  _btnClass.addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		  // TODO Auto-generated method stub
+		  if (_modes[4] == null) 
+			_modes[4] = new ClassMode(_canvas);
+		  
+			_canvas.changeMode(_modes[4]);
+				
+		}
+	  });
 	  
 	  _btnUseCase.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if (_modes[5] == null)
-				  _modes[5] = new UseCaseMode(_canvas);
-				
-				_canvas.changeMode(_modes[5]);
-			}});
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		  // TODO Auto-generated method stub
+	   	  if (_modes[5] == null)
+		    _modes[5] = new UseCaseMode(_canvas);
+	   	  
+			_canvas.changeMode(_modes[5]);
+		}
+	  });
+	  
+	  
 	}
 	
 	private void initLayoutConstraints() {

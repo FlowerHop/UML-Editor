@@ -28,14 +28,9 @@ public class SelectMode extends Mode {
   	  _pressY = e.getY();
   	  
   	  _selectedShape = _canvas.getContainedShape(_pressX, _pressY);
-  	
-  	  if (_selectedShape == null) {
-  		_selectedShape = new Rectangle2D.Double(_pressX, _pressY, w, h);
-  		_canvas.drawShape(_selectedShape);		
+  	  if (_selectedShape != null) {
+  		_canvas.drawConnectionPorts(_selectedShape);
   	  }
-      
-      _canvas.repaint();
-		
 	}
 
 	@Override
