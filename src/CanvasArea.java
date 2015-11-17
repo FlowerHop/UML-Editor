@@ -12,30 +12,28 @@ import java.awt.geom.RectangularShape;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 
 
 public class CanvasArea extends JPanel {
-	private final int PORTS_SIZE = 10;
+	private final double PORTS_SIDE = 6;
 	
     private CanvasArea _canvas;
-	private Vector _shapes = new Vector();
-	private Shape _selectedShape;
-	private Mode _mode;
+    
+	private Vector _umlObjects = new Vector();
 	
-    double w, h;
+	private Mode _mode;
     
     
     Cursor curCursor;
     
     public CanvasArea() {
       _canvas = this;
-      
-      w = 100;
-      h = 75;
-      
       setBackground(Color.white);
       MyMouseListener listener = new MyMouseListener();
       addMouseListener(listener);
@@ -44,86 +42,64 @@ public class CanvasArea extends JPanel {
     
     public void changeMode(Mode mode) {
     	_mode = mode;
+    	
+    	// Clean the high light squares for SelectMode 
+    	repaint();
     }
     
-    public Shape getContainedShape(int x, int y) {
-      Enumeration shapes = _shapes.elements();
-      
-      while (shapes.hasMoreElements()) {
-    	  Shape each = (Shape) shapes.nextElement();
-    	  if (each.contains(x, y)) {
-    		  return each;
-    	  }
+    public UMLObject getContainedUMLObject(int x, int y) {
+        Enumeration objects = _umlObjects.elements();
+        
+        while (objects.hasMoreElements()) {
+          UMLObject each = (UMLObject) objects.nextElement();
+      	  if (each.contains(x, y)) {
+      		  return each;
+      	  }
+        }
+        
+        return null;
       }
-      
-      return null;
-    }
-    
     
     public void paint(Graphics g) {
+      super.paint(g);
       Graphics2D g2D = (Graphics2D) g;
       g2D.clearRect(0, 0, (int)getBounds().getWidth(),(int) getBounds().getHeight());
       
-      Enumeration shapes = _shapes.elements();
-      while (shapes.hasMoreElements()) {
-    	  Shape each = (Shape) shapes.nextElement();
-    	  g2D.draw(each);
+      Enumeration objects = _umlObjects.elements();
+      while(objects.hasMoreElements()) {
+    	  UMLObject obj = (UMLObject) objects.nextElement();
+    	  obj.paintObject(g2D);
+      }
+      
+      if (_mode != null && _mode.getBounding() != null) {
+    	  drawHighlightSquares(g2D, _mode.getBounding());
       }
       
       if (curCursor != null)
         setCursor(curCursor);
     }
     
-    public void drawConnectionPorts(Shape shape) {
-      Rectangle2D bounds = shape.getBounds2D();
-      double x = bounds.getX();
-      double y = bounds.getY();
-    	
-      //TODO draw a shape I customize
-      System.out.println("draw Connection Ports");
-    	
-    	
-    }
-    
-    public void drawHighlightSquares(Graphics2D g2D, Rectangle2D r) {
+    private void drawHighlightSquares(Graphics2D g2D, Rectangle2D r) {
       double x = r.getX();
       double y = r.getY();
       double w = r.getWidth();
       double h = r.getHeight();
       g2D.setColor(Color.black);
-      g2D.fill(new Rectangle.Double(x - 3.0, y - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x + w * 0.5 - 3.0, y - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x + w - 3.0, y - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x - 3.0, y + h * 0.5 - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x + w - 3.0, y + h * 0.5 - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x - 3.0, y + h - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x + w * 0.5 - 3.0, y + h - 3.0, 6.0, 6.0));
-      g2D.fill(new Rectangle.Double(x + w - 3.0, y + h - 3.0, 6.0, 6.0));
+      g2D.fill(new Rectangle.Double(x + w * 0.5 - PORTS_SIDE/2, y - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+      g2D.fill(new Rectangle.Double(x - PORTS_SIDE/2, y + h * 0.5 - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+      g2D.fill(new Rectangle.Double(x + w - PORTS_SIDE/2, y + h * 0.5 - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+      g2D.fill(new Rectangle.Double(x + w * 0.5 - PORTS_SIDE/2, y + h - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
     }
     
-    public void displayParameters(Shape shape) {
-        double x = shape.getBounds().getX();
-        double y = shape.getBounds().getY();
-        double w = shape.getBounds().getWidth();
-        double h = shape.getBounds().getHeight();
-        String locString = "(" + Double.toString(x) + ","
-            + Double.toString(y) + ")";
-        String sizeString = "(" + Double.toString(w) + ","
-            + Double.toString(h) + ")";
-        System.out.println(locString);
-        //location.setText(locString);
+    public void drawObject (UMLObject obj) {
+    	if (obj != null) {
+    		_umlObjects.add(obj);
+    	}
     }
-
-    public void drawShape(Shape shape) {
-      if (shape != null)
-        _shapes.addElement(shape);
-    }
-    
-    public Shape moveShape(Shape shape, double toX, double toY, double width, double height) {
-      
-      ((RectangularShape)shape).setFrame(toX, toY, width, height);
-      
-      return shape;
+  
+    public UMLObject moveUMLObject(UMLObject obj, double toX, double toY, double width, double height) {
+    	obj.moveTo((int) toX, (int) toY);
+    	return obj;
     }
     class MyMouseListener extends MouseAdapter {
 

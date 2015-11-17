@@ -6,8 +6,7 @@ import java.awt.geom.Rectangle2D;
 
 
 public class UseCaseMode extends Mode {
-	// maybe it doesn't need to be a global
-	private Shape _selectedShape;
+	
 	
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
@@ -23,23 +22,11 @@ public class UseCaseMode extends Mode {
 	@Override
 	void onPressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-	  System.out.println("UseCaseMode");
 		
-//	  _pressX = e.getX();
-//  	  _pressY = e.getY();
-//  	  
-//  	  _selectedShape = _canvas.getContainedShape(_pressX, _pressY);
-//  	
-//  	  if (_selectedShape == null) {
-//  		_selectedShape = new Ellipse2D.Double(_pressX, _pressY, w, h);
-//  		_canvas.drawShape(_selectedShape);		
-//  	  }
-//      
-//      _canvas.repaint();
 	  _pressX = e.getX();
 	  _pressY = e.getY();
 	  
-	  _canvas.drawShape(new Ellipse2D.Double(_pressX, _pressY, w, h));
+	  _canvas.drawObject(new UseCaseObject(_pressX, _pressY, w, h));
 	  _canvas.repaint();
 		
 	}
@@ -61,15 +48,18 @@ public class UseCaseMode extends Mode {
 		int clickX = e.getX();
         int clickY = e.getY();
         
-    	_selectedShape = _canvas.getContainedShape(clickX, clickY);
-        if (_selectedShape != null) { 
-            _canvas.curCursor = Cursor
-                .getPredefinedCursor(Cursor.HAND_CURSOR);
+        if (_canvas.getContainedUMLObject(clickX, clickY) != null) { 
+          _canvas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         } else {
-            _canvas.curCursor = Cursor.getDefaultCursor();
+          _canvas.setCursor(Cursor.getDefaultCursor());      
         }
         _canvas.repaint();
 		
+	}
+
+	@Override
+	Rectangle2D getBounding() {
+		return null;
 	}
 
 	

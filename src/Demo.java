@@ -34,7 +34,6 @@ public class Demo extends JFrame {
           System.exit(0);
         }
       });
-    
       this.setContentPane(new MainPanel());
       this.setSize(1000, 600);
       setVisible(true);

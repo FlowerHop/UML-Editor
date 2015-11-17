@@ -3,55 +3,67 @@ import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.JComponent;
+
 
 
 
 public class SelectMode extends Mode {
-	private Shape _selectedShape;
+	// maybe it doesn't need to be a global
+	private UMLObject _selectedUMLObject;
+	
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
 	
-	int w = 100;
-	int h = 75;
-
+	private Rectangle2D _boundingRec;
+	
 	public SelectMode(CanvasArea canvas) {
-		_canvas = canvas;
+	  _canvas = canvas;
 		
 	}
 	
 	@Override
 	void onPressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+	  // TODO Auto-generated method stub
 	  System.out.println("SelectMode");
 		
 	  _pressX = e.getX();
   	  _pressY = e.getY();
   	  
-  	  _selectedShape = _canvas.getContainedShape(_pressX, _pressY);
-  	  if (_selectedShape != null) {
-  		_canvas.drawConnectionPorts(_selectedShape);
-  	  }
+  	  _selectedUMLObject = _canvas.getContainedUMLObject(_pressX, _pressY);
+      if (_selectedUMLObject != null) {
+	    //_canvas.drawConnectionPorts(_selectedUMLObject);
+	    if (_boundingRec == null) {
+	      _boundingRec = new Rectangle2D.Double(0, 0, 0, 0);
+	    }
+	    _boundingRec.setFrame(_selectedUMLObject.getX(), _selectedUMLObject.getY(), _selectedUMLObject.getWidth(), _selectedUMLObject.getHeight());
+	    
+        System.out.println("Select a component.");
+      } else _boundingRec = null;
+      
+      _canvas.repaint();
 	}
 
 	@Override
 	void onDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-	  if (_selectedShape != null) {
+	  // TODO Auto-generated method stub
+	  if (_selectedUMLObject != null) {
         int toX = e.getX();
         int toY = e.getY();
     
-        double originX = _selectedShape.getBounds2D().getX();
-        double originY = _selectedShape.getBounds2D().getY();
-        double originWidth = _selectedShape.getBounds2D().getWidth();   
-        double originHeight = _selectedShape.getBounds2D().getHeight();
-        double dragX = toX - _pressX;             
-        double dragY = toY - _pressY;
+        
+        double originX = _selectedUMLObject.getX();
+        double originY = _selectedUMLObject.getY();
+        double originWidth = _selectedUMLObject.getWidth();   
+        double originHeight = _selectedUMLObject.getHeight();
+        int dragX = toX - _pressX;             
+        int dragY = toY - _pressY;
               
         _pressX = toX;
         _pressY = toY;
                
-        _selectedShape = _canvas.moveShape(_selectedShape, originX + dragX, originY + dragY, originWidth, originHeight);
-
+        _selectedUMLObject = _canvas.moveUMLObject(_selectedUMLObject, originX + dragX, originY + dragY, originWidth, originHeight);
+        _boundingRec.setFrame(_selectedUMLObject.getX(), _selectedUMLObject.getY(), _selectedUMLObject.getWidth(), _selectedUMLObject.getHeight());
       }
         	  
       _canvas.repaint();		
@@ -65,19 +77,22 @@ public class SelectMode extends Mode {
 
 	@Override
 	void onMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int clickX = e.getX();
-        int clickY = e.getY();
+	  // TODO Auto-generated method stub
+	  int clickX = e.getX();
+      int clickY = e.getY();
         
-    	_selectedShape = _canvas.getContainedShape(clickX, clickY);
-        if (_selectedShape != null) { 
-            _canvas.curCursor = Cursor
-                .getPredefinedCursor(Cursor.HAND_CURSOR);
-        } else {
-            _canvas.curCursor = Cursor.getDefaultCursor();
-        }
-        _canvas.repaint();
+      _selectedUMLObject = _canvas.getContainedUMLObject(clickX, clickY);
+      if (_selectedUMLObject != null) { 
+        _canvas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+      } else {
+        _canvas.setCursor(Cursor.getDefaultCursor());      
+      }
 		
+	}
+	
+	@Override
+	Rectangle2D getBounding() {
+	  return _boundingRec;
 	}
 
 	
