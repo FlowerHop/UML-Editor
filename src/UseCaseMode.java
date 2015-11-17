@@ -6,64 +6,51 @@ import java.awt.geom.Rectangle2D;
 
 
 public class UseCaseMode extends Mode {
-	
-	
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
 	
-	int w = 100;
-	int h = 75;
+	private final int _width = 100;
+	private final int _height = 75;
 
 	public UseCaseMode (CanvasArea canvas) {
-		_canvas = canvas;
-		
+	  _canvas = canvas;
 	}
 	
 	@Override
-	void onPressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	  _pressX = e.getX();
-	  _pressY = e.getY();
+	void onPressed (MouseEvent e) {
+	  _pressX = e.getX ();
+	  _pressY = e.getY ();
 	  
-	  _canvas.drawObject(new UseCaseObject(_pressX, _pressY, w, h));
-	  _canvas.repaint();
+	  _canvas.drawObject (new UseCaseObject (_pressX, _pressY, _width, _height));
+	  _canvas.repaint ();
+	}
+
+	@Override
+	void onDragged (MouseEvent e) {
 		
 	}
 
 	@Override
-	void onDragged(MouseEvent e) {
-		
-	}
-
-	@Override
-	void onReleased(MouseEvent e) {
+	void onReleased (MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	void onMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int clickX = e.getX();
-        int clickY = e.getY();
+	void onMoved (MouseEvent e) {
+		int clickX = e.getX ();
+        int clickY = e.getY ();
         
-        if (_canvas.getContainedUMLObject(clickX, clickY) != null) { 
-          _canvas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        if (_canvas.getContainedUMLObject (clickX, clickY) != null) { 
+          _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
         } else {
-          _canvas.setCursor(Cursor.getDefaultCursor());      
+          _canvas.setCursor (Cursor.getDefaultCursor ());      
         }
-        _canvas.repaint();
-		
+        
+        _canvas.repaint ();
 	}
 
 	@Override
-	Rectangle2D getBounding() {
+	Rectangle2D getBounding () {
 		return null;
 	}
-
-	
-
-	
-
 }

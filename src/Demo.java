@@ -26,20 +26,20 @@ import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
 public class Demo extends JFrame {
-    public Demo() {
-      super();
-    
-      addWindowListener(new WindowAdapter() {
-        public void windowClosing(WindowEvent e) {
-          System.exit(0);
+    public Demo () {
+      super ();
+
+      addWindowListener (new WindowAdapter () {
+        public void windowClosing (WindowEvent e) {
+          System.exit (0);
         }
       });
-      this.setContentPane(new MainPanel());
-      this.setSize(1000, 600);
-      setVisible(true);
+      this.setContentPane (new MainPanel ());
+      this.setSize (1000, 600);
+      setVisible (true);
     }
 
-    public static void main(String arg[]) {
-      new Demo();
+    public static void main (String arg[]) {
+      new Demo ();
     } 
 }
