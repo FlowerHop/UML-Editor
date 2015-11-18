@@ -1,7 +1,9 @@
 package Modes;
 import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Vector;
 
 import BasicObjects.UMLObject;
 import UI.CanvasArea;
@@ -24,7 +26,10 @@ public class SelectMode extends Mode {
 	public void onPressed (MouseEvent e) {
 	  _pressX = e.getX ();
   	  _pressY = e.getY ();
-  	  _selectedUMLObject = _canvas.getContainedUMLObject (_pressX, _pressY);
+  	  Vector containedUMLObjects = _canvas.getContainedUMLObject (_pressX, _pressY);
+  	  
+  	  if (!containedUMLObjects.isEmpty ())
+  	    _selectedUMLObject = (UMLObject) containedUMLObjects.get(0);
       
       _canvas.repaint ();
 	}
@@ -34,19 +39,15 @@ public class SelectMode extends Mode {
 	  if (_selectedUMLObject != null) {
         int toX = e.getX ();
         int toY = e.getY ();
-   
-        double originX = _selectedUMLObject.getX ();
-        double originY = _selectedUMLObject.getY ();
-        double originWidth = _selectedUMLObject.getWidth ();   
-        double originHeight = _selectedUMLObject.getHeight ();
-        
         int dragX = toX - _pressX;             
         int dragY = toY - _pressY;
-              
+        double originX = _selectedUMLObject.getX ();
+        double originY = _selectedUMLObject.getY ();
+        
         _pressX = toX;
         _pressY = toY;
-               
-        _selectedUMLObject = _canvas.moveUMLObject (_selectedUMLObject, originX + dragX, originY + dragY, originWidth, originHeight);
+        
+        _selectedUMLObject.moveTo ((int) (originX + dragX), (int) (originY + dragY));
       }
         	  
       _canvas.repaint ();		
@@ -62,18 +63,19 @@ public class SelectMode extends Mode {
 	  int clickX = e.getX ();
       int clickY = e.getY ();
         
-      if (_canvas.getContainedUMLObject (clickX, clickY) != null) { 
+      Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+      
+      if (!containedUMLObjects.isEmpty ()) { 
         _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
       } else {
         _canvas.setCursor (Cursor.getDefaultCursor ());      
       }
-		
 	}
 	
 	@Override
-	public Rectangle2D getBounding () {
+	public Point[] getConnectionPorts () {
 	  if (_selectedUMLObject != null) {
-		return new Rectangle2D.Double(_selectedUMLObject.getX (), _selectedUMLObject.getY (), _selectedUMLObject.getWidth (), _selectedUMLObject.getHeight ());    
+		return _selectedUMLObject.getConnectionPorts();    
 	  } else return null;
 	}
 }

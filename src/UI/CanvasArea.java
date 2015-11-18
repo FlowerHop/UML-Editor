@@ -3,9 +3,11 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -24,6 +26,7 @@ public class CanvasArea extends JPanel {
     private CanvasArea _canvas;
     
 	private Vector _umlObjects = new Vector ();
+	private Vector _umlLines = new Vector ();
 	
 	private Mode _mode;
     
@@ -43,17 +46,18 @@ public class CanvasArea extends JPanel {
       repaint ();
     }
     
-    public UMLObject getContainedUMLObject (int x, int y) {
+    public Vector getContainedUMLObject (int x, int y) {
+      Vector result = new Vector ();
       Enumeration objects = _umlObjects.elements ();
         
       while (objects.hasMoreElements ()) {
         UMLObject each = (UMLObject) objects.nextElement ();
     	if (each.contains (x, y)) {
-      	  return each;
+    	  result.add(each);
       	}
       }
        
-      return null;
+      return result;
     }
     
     public void paint (Graphics g) {
@@ -69,8 +73,15 @@ public class CanvasArea extends JPanel {
     	obj.paintObject (g2D);
       }
       
-      if (_mode != null && _mode.getBounding () != null) {
-    	drawHighlightSquares (g2D, _mode.getBounding ());
+      Enumeration lines = _umlLines.elements ();
+      
+      while (lines.hasMoreElements()) {
+    	Line2D line = (Line2D) lines.nextElement();
+    	g2D.draw(line);
+      }
+      
+      if (_mode != null && _mode.getConnectionPorts () != null) {
+    	drawHighlightSquares (g2D, _mode.getConnectionPorts ());
       }
       
       if (_curCursor != null)
@@ -82,22 +93,19 @@ public class CanvasArea extends JPanel {
     	_umlObjects.add (obj);
       }
     }
-  
-    public UMLObject moveUMLObject (UMLObject obj, double toX, double toY, double width, double height) {
-      obj.moveTo ((int) toX, (int) toY);
-      return obj;
+    
+    public void drawLine (Line2D line) {
+      if (line != null) {
+    	_umlLines.add(line);
+      }
     }
     
-    private void drawHighlightSquares (Graphics2D g2D, Rectangle2D r) {
-      double x = r.getX ();
-      double y = r.getY ();
-      double w = r.getWidth ();
-      double h = r.getHeight ();
+    private void drawHighlightSquares (Graphics2D g2D, Point[] points) {
       g2D.setColor (Color.black);
-      g2D.fill (new Rectangle.Double (x + w * 0.5 - PORTS_SIDE/2, y - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
-      g2D.fill (new Rectangle.Double (x - PORTS_SIDE/2, y + h * 0.5 - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
-      g2D.fill (new Rectangle.Double (x + w - PORTS_SIDE/2, y + h * 0.5 - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
-      g2D.fill (new Rectangle.Double (x + w * 0.5 - PORTS_SIDE/2, y + h - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+      for (int i = 0; i < 4; i++) {
+    	Point point = points[i];
+    	g2D.fill(new Rectangle.Double (point.getX() - PORTS_SIDE/2, point.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+      }
     }
         
     class MyMouseListener extends MouseAdapter {

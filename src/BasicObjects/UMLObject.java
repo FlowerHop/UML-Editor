@@ -1,5 +1,6 @@
 package BasicObjects;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 
 
@@ -27,18 +28,27 @@ public class UMLObject {
 	}
 	
 	public double getX () {
-		return _bounding.getX();
+		return _bounding.getX ();
 	}
 	
 	public double getY () {
-		return _bounding.getY();
+		return _bounding.getY ();
 	}
 	
 	public double getWidth () {
-		return _bounding.getWidth();
+		return _bounding.getWidth ();
 	}
 	
 	public double getHeight () {
-		return _bounding.getHeight();
+		return _bounding.getHeight ();
+	}
+	
+	public Point[] getConnectionPorts () {
+	  Point top = new Point ((int) (getX () + getWidth ()*0.5), (int) (getY ()));
+	  Point left = new Point ((int) (getX ()), (int) (getY () + getHeight ()*0.5));
+	  Point right = new Point ((int) (getX () + getWidth ()), (int) (getY () + getHeight ()*0.5));
+	  Point bottom = new Point ((int) (getX () + getWidth ()*0.5), (int) (getY () + getHeight ()));
+	  
+	  return new Point[] {top, left, right, bottom};
 	}
 }

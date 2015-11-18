@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import Modes.AssociationMode;
 import Modes.ClassMode;
 import Modes.Mode;
 import Modes.SelectMode;
@@ -45,7 +46,6 @@ public class MainPanel extends JPanel {
 	  _btnSelect.addActionListener (new ActionListener () {
 		@Override
 		public void actionPerformed (ActionEvent e) {
-		  // TODO Auto-generated method stub
 		  if (_modes[0] == null)
 			_modes[0] = new SelectMode (_canvas);
 			
@@ -53,10 +53,19 @@ public class MainPanel extends JPanel {
 		}
 	  });
 	  
+	  _btnAssociation.addActionListener (new ActionListener () {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+		  if (_modes[1] == null)
+		    _modes[1] = new AssociationMode (_canvas);
+				
+		    _canvas.changeMode (_modes[1]);
+		  }
+	  });
+	  
 	  _btnClass.addActionListener (new ActionListener () {
 		@Override
 		public void actionPerformed (ActionEvent e) {
-		  // TODO Auto-generated method stub
 		  if (_modes[4] == null) 
 			_modes[4] = new ClassMode (_canvas);
 			_canvas.changeMode (_modes[4]);

@@ -1,7 +1,9 @@
 package Modes;
 import java.awt.Cursor;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Vector;
 
 import BasicObjects.UseCaseObject;
 import UI.CanvasArea;
@@ -42,7 +44,9 @@ public class UseCaseMode extends Mode {
 		int clickX = e.getX ();
         int clickY = e.getY ();
         
-        if (_canvas.getContainedUMLObject (clickX, clickY) != null) { 
+        Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+    
+        if (!containedUMLObjects.isEmpty ()) {
           _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
         } else {
           _canvas.setCursor (Cursor.getDefaultCursor ());      
@@ -52,7 +56,7 @@ public class UseCaseMode extends Mode {
 	}
 
 	@Override
-	public Rectangle2D getBounding () {
-		return null;
+	public Point[] getConnectionPorts() {
+	  return null;
 	}
 }

@@ -1,0 +1,133 @@
+package Modes;
+
+import java.awt.Cursor;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.util.Enumeration;
+import java.util.Vector;
+
+import BasicObjects.UMLObject;
+import UI.CanvasArea;
+
+public class AssociationMode extends Mode {
+	// maybe it doesn't need to be a global
+	private UMLObject _pressedUMLObject;
+	
+	private CanvasArea _canvas;
+	private int _pressX, _pressY;
+	private double _originUMLObjectX, _originUMLObjectY;
+
+	public AssociationMode (CanvasArea canvas) {
+	  _canvas = canvas;
+	}
+	
+	@Override
+	public void onPressed(MouseEvent e) {
+	  _pressX = e.getX();
+	  _pressY = e.getY();
+	  Vector containedUMLObjects = _canvas.getContainedUMLObject (_pressX, _pressY);
+      
+	  if (!containedUMLObjects.isEmpty ())
+	      _pressedUMLObject = (UMLObject) containedUMLObjects.get(0);
+      
+      if (_pressedUMLObject != null) {
+        _originUMLObjectX = _pressedUMLObject.getX();
+        _originUMLObjectY = _pressedUMLObject.getY();
+      }
+      
+      _canvas.repaint ();
+	}
+
+	@Override
+	public void onDragged(MouseEvent e) {
+	  if (_pressedUMLObject != null) {
+		  int toX = e.getX ();
+	      int toY = e.getY ();
+	      int dragX = toX - _pressX;             
+	      int dragY = toY - _pressY;
+	      double originX = _pressedUMLObject.getX ();
+	      double originY = _pressedUMLObject.getY ();
+	        
+	      _pressX = toX;
+	      _pressY = toY;
+	        
+	      _pressedUMLObject.moveTo ((int) (originX + dragX), (int) (originY + dragY));
+	    }
+	        	  
+	    _canvas.repaint ();	
+	}
+
+	@Override
+	public void onReleased (MouseEvent e) {
+	  if (_pressedUMLObject != null) {
+		int releaseX = e.getX ();
+		int releaseY = e.getY ();
+		Vector containedUMLObjects = _canvas.getContainedUMLObject (releaseX, releaseY);
+		Enumeration objects = containedUMLObjects.elements ();
+		
+		UMLObject _releasedUMLObject = null;
+		
+		while (objects.hasMoreElements ()) {
+		  UMLObject each = (UMLObject) objects.nextElement ();
+		  if (each != _pressedUMLObject) {
+			_releasedUMLObject = each;
+			break;
+		  }
+		}
+		
+		_pressedUMLObject.moveTo ((int) _originUMLObjectX, (int) _originUMLObjectY);
+		
+		if (_releasedUMLObject != null) {
+		  // create Association Line
+		  _canvas.drawLine (createAssociationLine (_pressedUMLObject, _releasedUMLObject));
+		}
+		
+		_canvas.repaint ();
+	  }
+	}
+
+	@Override
+	public void onMoved(MouseEvent e) {
+	  int clickX = e.getX ();
+	  int clickY = e.getY ();
+	        
+      Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+      
+      if (containedUMLObjects.size () != 0) {
+	    _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+	  } else {
+	    _canvas.setCursor (Cursor.getDefaultCursor ());      
+	  }
+	}
+
+	private Line2D createAssociationLine (UMLObject pressedObj, UMLObject releasedObj) {
+      Point[] pressConnectionPorts = pressedObj.getConnectionPorts ();
+      Point[] releaseConnectionPorts = releasedObj.getConnectionPorts ();
+      
+	  Point[] result = new Point[2];
+	  double minDistance = -1;
+      for (int i = 0; i < 4; i++) {
+    	for (int j = 0; j < 4; j++) {
+    	  double x1 = pressConnectionPorts[i].getX();
+    	  double y1 = pressConnectionPorts[i].getY();
+    	  double x2 = releaseConnectionPorts[j].getX();
+    	  double y2 = releaseConnectionPorts[j].getY();
+    	  double distance = Math.sqrt ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+    	  if (minDistance == -1 || distance < minDistance) {
+    		result[0] = new Point ((int) x1, (int) y1);
+    		result[1] = new Point ((int) x2, (int) y2);
+    		minDistance = distance;
+    	  }
+    	}
+      }
+      
+      return new Line2D.Double ((int) result[0].getX(), (int) result[0].getY(), (int) result[1].getX(), (int) result[1].getY());
+	}
+
+	@Override
+	public Point[] getConnectionPorts() {
+	  return null;
+	}
+}
