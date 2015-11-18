@@ -1,3 +1,4 @@
+package UI;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -6,6 +7,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import Modes.ClassMode;
+import Modes.Mode;
+import Modes.SelectMode;
+import Modes.UseCaseMode;
 
 
 public class MainPanel extends JPanel {

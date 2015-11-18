@@ -1,9 +1,10 @@
+package Modes;
 import java.awt.Cursor;
-import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
-import javax.swing.JComponent;
+import BasicObjects.UMLObject;
+import UI.CanvasArea;
 
 
 
@@ -20,7 +21,7 @@ public class SelectMode extends Mode {
 	}
 	
 	@Override
-	void onPressed (MouseEvent e) {
+	public void onPressed (MouseEvent e) {
 	  _pressX = e.getX ();
   	  _pressY = e.getY ();
   	  _selectedUMLObject = _canvas.getContainedUMLObject (_pressX, _pressY);
@@ -29,7 +30,7 @@ public class SelectMode extends Mode {
 	}
 
 	@Override
-	void onDragged (MouseEvent e) {
+	public void onDragged (MouseEvent e) {
 	  if (_selectedUMLObject != null) {
         int toX = e.getX ();
         int toY = e.getY ();
@@ -52,12 +53,12 @@ public class SelectMode extends Mode {
 	}
 
 	@Override
-	void onReleased(MouseEvent e) {
+	public void onReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	void onMoved (MouseEvent e) {
+	public void onMoved (MouseEvent e) {
 	  int clickX = e.getX ();
       int clickY = e.getY ();
         
@@ -70,7 +71,7 @@ public class SelectMode extends Mode {
 	}
 	
 	@Override
-	Rectangle2D getBounding () {
+	public Rectangle2D getBounding () {
 	  if (_selectedUMLObject != null) {
 		return new Rectangle2D.Double(_selectedUMLObject.getX (), _selectedUMLObject.getY (), _selectedUMLObject.getWidth (), _selectedUMLObject.getHeight ());    
 	  } else return null;
