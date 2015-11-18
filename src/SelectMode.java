@@ -15,8 +15,6 @@ public class SelectMode extends Mode {
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
 	
-	private Rectangle2D _boundingRec;
-	
 	public SelectMode (CanvasArea canvas) {
 	  _canvas = canvas;
 	}
@@ -26,15 +24,6 @@ public class SelectMode extends Mode {
 	  _pressX = e.getX ();
   	  _pressY = e.getY ();
   	  _selectedUMLObject = _canvas.getContainedUMLObject (_pressX, _pressY);
-  	  
-      if (_selectedUMLObject != null) {
-	    if (_boundingRec == null) {
-	      _boundingRec = new Rectangle2D.Double (0, 0, 0, 0);
-	    }
-	    
-	    _boundingRec.setFrame (_selectedUMLObject.getX (), _selectedUMLObject.getY (), _selectedUMLObject.getWidth (), _selectedUMLObject.getHeight ());
-	    
-      } else _boundingRec = null;
       
       _canvas.repaint ();
 	}
@@ -57,7 +46,6 @@ public class SelectMode extends Mode {
         _pressY = toY;
                
         _selectedUMLObject = _canvas.moveUMLObject (_selectedUMLObject, originX + dragX, originY + dragY, originWidth, originHeight);
-        _boundingRec.setFrame (_selectedUMLObject.getX (), _selectedUMLObject.getY (), _selectedUMLObject.getWidth (), _selectedUMLObject.getHeight ());
       }
         	  
       _canvas.repaint ();		
@@ -73,8 +61,7 @@ public class SelectMode extends Mode {
 	  int clickX = e.getX ();
       int clickY = e.getY ();
         
-      _selectedUMLObject = _canvas.getContainedUMLObject (clickX, clickY);
-      if (_selectedUMLObject != null) { 
+      if (_canvas.getContainedUMLObject (clickX, clickY) != null) { 
         _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
       } else {
         _canvas.setCursor (Cursor.getDefaultCursor ());      
@@ -84,6 +71,8 @@ public class SelectMode extends Mode {
 	
 	@Override
 	Rectangle2D getBounding () {
-	  return _boundingRec;
+	  if (_selectedUMLObject != null) {
+		return new Rectangle2D.Double(_selectedUMLObject.getX (), _selectedUMLObject.getY (), _selectedUMLObject.getWidth (), _selectedUMLObject.getHeight ());    
+	  } else return null;
 	}
 }
