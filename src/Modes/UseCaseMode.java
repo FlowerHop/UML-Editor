@@ -44,7 +44,7 @@ public class UseCaseMode extends Mode {
 		int clickX = e.getX ();
         int clickY = e.getY ();
         
-        Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+        Vector containedUMLObjects = _canvas.getContainedUMLObjects (clickX, clickY);
     
         if (!containedUMLObjects.isEmpty ()) {
           _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));

@@ -27,7 +27,7 @@ public class AssociationMode extends Mode {
 	public void onPressed(MouseEvent e) {
 	  _pressX = e.getX();
 	  _pressY = e.getY();
-	  Vector containedUMLObjects = _canvas.getContainedUMLObject (_pressX, _pressY);
+	  Vector containedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
       
 	  if (!containedUMLObjects.isEmpty ())
 	      _pressedUMLObject = (UMLObject) containedUMLObjects.get(0);
@@ -64,7 +64,7 @@ public class AssociationMode extends Mode {
 	  if (_pressedUMLObject != null) {
 		int releaseX = e.getX ();
 		int releaseY = e.getY ();
-		Vector containedUMLObjects = _canvas.getContainedUMLObject (releaseX, releaseY);
+		Vector containedUMLObjects = _canvas.getContainedUMLObjects (releaseX, releaseY);
 		Enumeration objects = containedUMLObjects.elements ();
 		
 		UMLObject _releasedUMLObject = null;
@@ -93,7 +93,7 @@ public class AssociationMode extends Mode {
 	  int clickX = e.getX ();
 	  int clickY = e.getY ();
 	        
-      Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+      Vector containedUMLObjects = _canvas.getContainedUMLObjects (clickX, clickY);
       
       if (containedUMLObjects.size () != 0) {
 	    _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));

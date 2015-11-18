@@ -46,7 +46,7 @@ public class CanvasArea extends JPanel {
       repaint ();
     }
     
-    public Vector getContainedUMLObject (int x, int y) {
+    public Vector getContainedUMLObjects (int x, int y) {
       Vector result = new Vector ();
       Enumeration objects = _umlObjects.elements ();
         

@@ -26,7 +26,7 @@ public class SelectMode extends Mode {
 	public void onPressed (MouseEvent e) {
 	  _pressX = e.getX ();
   	  _pressY = e.getY ();
-  	  Vector containedUMLObjects = _canvas.getContainedUMLObject (_pressX, _pressY);
+  	  Vector containedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
   	  
   	  if (!containedUMLObjects.isEmpty ())
   	    _selectedUMLObject = (UMLObject) containedUMLObjects.get(0);
@@ -63,7 +63,7 @@ public class SelectMode extends Mode {
 	  int clickX = e.getX ();
       int clickY = e.getY ();
         
-      Vector containedUMLObjects = _canvas.getContainedUMLObject (clickX, clickY);
+      Vector containedUMLObjects = _canvas.getContainedUMLObjects (clickX, clickY);
       
       if (!containedUMLObjects.isEmpty ()) { 
         _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
