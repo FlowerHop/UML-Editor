@@ -75,7 +75,7 @@ public class SelectMode extends Mode {
 	@Override
 	public Point[] getConnectionPorts () {
 	  if (_selectedUMLObject != null) {
-		return _selectedUMLObject.getConnectionPorts();    
+		return _selectedUMLObject.getConnectionPorts ();    
 	  } else return null;
 	}
 }

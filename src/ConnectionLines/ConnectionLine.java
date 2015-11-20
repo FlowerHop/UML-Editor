@@ -3,24 +3,34 @@ package ConnectionLines;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 import BasicObjects.UMLObject;
 
 public class ConnectionLine {
+	protected final double PORTS_SIDE = 6;
 	private UMLObject _from;
 	private UMLObject _to;
+	protected Point[] _pairPoints;
        
     public ConnectionLine (UMLObject from, UMLObject to) {
       _from = from;
       _to = to;
+      _pairPoints = new Point[2];
     }
     
     public void paintLine (Graphics g) {
-      System.out.println ("Paint Line");
+      Graphics2D g2D = (Graphics2D) g;
+      findShortestConnectionPorts ();
+      
+      for (int i = 0; i < 2; i++) {
+  	    Point point = _pairPoints[i];
+  	    g2D.fill (new Rectangle.Double (point.getX() - PORTS_SIDE/2, point.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+  	  }
     }
     
-    protected Point[] findShortestConnectionPorts () {
+    private void findShortestConnectionPorts () {
       Point[] toConnectionPorts = _to.getConnectionPorts ();
       Point[] fromConnectionPorts = _from.getConnectionPorts ();
         
@@ -42,6 +52,13 @@ public class ConnectionLine {
       	}
       }
         
-      return result;
+      _pairPoints = result;
+    }
+
+    public Point[] getPairPorts () {
+      if (_pairPoints == null) {
+    	_pairPoints = new Point[2];
+      }
+      return _pairPoints;
     }
 }
