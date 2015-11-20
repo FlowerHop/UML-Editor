@@ -102,9 +102,4 @@ public class AssociationMode extends Mode {
 	    _canvas.setCursor (Cursor.getDefaultCursor ());      
 	  }
 	}
-
-	@Override
-	public Point[] getConnectionPorts() {
-	  return null;
-	}
 }

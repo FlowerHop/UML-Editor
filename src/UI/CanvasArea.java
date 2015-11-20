@@ -81,10 +81,6 @@ public class CanvasArea extends JPanel {
     	line.paintLine (g2D);
       }
       
-      if (_mode != null && _mode.getConnectionPorts () != null) {
-    	drawHighlightSquares (g2D, _mode.getConnectionPorts ());
-      }
-      
       if (_curCursor != null)
         setCursor (_curCursor);
     }
@@ -98,14 +94,6 @@ public class CanvasArea extends JPanel {
     public void drawLine (ConnectionLine line) {
       if (line != null) {
     	_umlLines.add(line);
-      }
-    }
-    
-    private void drawHighlightSquares (Graphics2D g2D, Point[] points) {
-      g2D.setColor (Color.black);
-      for (int i = 0; i < 4; i++) {
-    	Point point = points[i];
-    	g2D.fill(new Rectangle.Double (point.getX() - PORTS_SIDE/2, point.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
       }
     }
         

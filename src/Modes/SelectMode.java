@@ -28,8 +28,14 @@ public class SelectMode extends Mode {
   	  _pressY = e.getY ();
   	  Vector containedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
   	  
-  	  if (!containedUMLObjects.isEmpty ())
+  	  if (_selectedUMLObject != null) {
+  		_selectedUMLObject.setSelect (false);  
+  	  }
+  	  
+  	  if (!containedUMLObjects.isEmpty ()) {
   	    _selectedUMLObject = (UMLObject) containedUMLObjects.get(0);
+  	    _selectedUMLObject.setSelect (true);  
+  	  }
       
       _canvas.repaint ();
 	}
@@ -70,12 +76,5 @@ public class SelectMode extends Mode {
       } else {
         _canvas.setCursor (Cursor.getDefaultCursor ());      
       }
-	}
-	
-	@Override
-	public Point[] getConnectionPorts () {
-	  if (_selectedUMLObject != null) {
-		return _selectedUMLObject.getConnectionPorts ();    
-	  } else return null;
 	}
 }

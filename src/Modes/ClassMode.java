@@ -54,9 +54,4 @@ public class ClassMode extends Mode {
         
         _canvas.repaint ();
 	}
-
-	@Override
-	public Point[] getConnectionPorts() {
-	  return null;
-	}
 }

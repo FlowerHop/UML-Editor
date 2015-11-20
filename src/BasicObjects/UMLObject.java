@@ -1,18 +1,31 @@
 package BasicObjects;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
 
 public class UMLObject {
+	private final double PORTS_SIDE = 6;
 	private Rectangle2D _bounding;
+	private boolean _isSelected;
 	
 	public UMLObject (double posX, double posY, double width, double height) {
 	  _bounding = new Rectangle2D.Double (posX, posY, width, height);
     }
 	
 	public void paintObject (Graphics g) {
-	  System.out.println ("UML paint");
+	  if (_isSelected) {
+		Graphics2D g2D = (Graphics2D) g;  
+		Point[] ports = getConnectionPorts ();
+		
+		for (int i = 0; i < 4; i++) {
+		  Point port = ports[i];
+	      g2D.fill(new Rectangle.Double (port.getX() - PORTS_SIDE/2, port.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+		}
+		
+	  }
 	}
 	
 	public void moveTo (int x, int y) {
@@ -51,4 +64,8 @@ public class UMLObject {
 	  
 	  return new Point[] {top, left, right, bottom};
 	}
+
+    public void setSelect (boolean isSelect) {
+      _isSelected = isSelect;
+    }
 }

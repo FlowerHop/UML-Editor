@@ -15,6 +15,8 @@ public class UseCaseObject extends UMLObject {
 	}
 
 	public void paintObject (Graphics g) {
+	  super.paintObject (g);
+	  
 	  Graphics2D g2D = (Graphics2D) g;
 	  g2D.draw (_ellipse);
 	}
