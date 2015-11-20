@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import BasicObjects.UMLObject;
+import ConnectionLines.AssociationLine;
 import UI.CanvasArea;
 
 public class AssociationMode extends Mode {
@@ -81,7 +82,7 @@ public class AssociationMode extends Mode {
 		
 		if (_releasedUMLObject != null) {
 		  // create Association Line
-		  _canvas.drawLine (createAssociationLine (_pressedUMLObject, _releasedUMLObject));
+		  _canvas.drawLine (new AssociationLine (_pressedUMLObject, _releasedUMLObject));
 		}
 		
 		_canvas.repaint ();
@@ -100,30 +101,6 @@ public class AssociationMode extends Mode {
 	  } else {
 	    _canvas.setCursor (Cursor.getDefaultCursor ());      
 	  }
-	}
-
-	private Line2D createAssociationLine (UMLObject pressedObj, UMLObject releasedObj) {
-      Point[] pressConnectionPorts = pressedObj.getConnectionPorts ();
-      Point[] releaseConnectionPorts = releasedObj.getConnectionPorts ();
-      
-	  Point[] result = new Point[2];
-	  double minDistance = -1;
-      for (int i = 0; i < 4; i++) {
-    	for (int j = 0; j < 4; j++) {
-    	  double x1 = pressConnectionPorts[i].getX();
-    	  double y1 = pressConnectionPorts[i].getY();
-    	  double x2 = releaseConnectionPorts[j].getX();
-    	  double y2 = releaseConnectionPorts[j].getY();
-    	  double distance = Math.sqrt ((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
-    	  if (minDistance == -1 || distance < minDistance) {
-    		result[0] = new Point ((int) x1, (int) y1);
-    		result[1] = new Point ((int) x2, (int) y2);
-    		minDistance = distance;
-    	  }
-    	}
-      }
-      
-      return new Line2D.Double ((int) result[0].getX(), (int) result[0].getY(), (int) result[1].getX(), (int) result[1].getY());
 	}
 
 	@Override

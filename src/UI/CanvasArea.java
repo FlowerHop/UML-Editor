@@ -15,6 +15,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import BasicObjects.UMLObject;
+import ConnectionLines.ConnectionLine;
 import Modes.Mode;
 
 
@@ -76,8 +77,8 @@ public class CanvasArea extends JPanel {
       Enumeration lines = _umlLines.elements ();
       
       while (lines.hasMoreElements()) {
-    	Line2D line = (Line2D) lines.nextElement();
-    	g2D.draw(line);
+    	ConnectionLine line = (ConnectionLine) lines.nextElement ();
+    	line.paintLine (g2D);
       }
       
       if (_mode != null && _mode.getConnectionPorts () != null) {
@@ -94,7 +95,7 @@ public class CanvasArea extends JPanel {
       }
     }
     
-    public void drawLine (Line2D line) {
+    public void drawLine (ConnectionLine line) {
       if (line != null) {
     	_umlLines.add(line);
       }
