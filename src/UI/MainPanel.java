@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import Modes.AssociationMode;
 import Modes.ClassMode;
+import Modes.CompositionMode;
 import Modes.GeneralizationMode;
 import Modes.Mode;
 import Modes.SelectMode;
@@ -72,6 +73,16 @@ public class MainPanel extends JPanel {
 		  
 			_canvas.changeMode (_modes[2]);
 		  }
+	  });
+	  
+	  _btnComposition.addActionListener (new ActionListener () {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+		  if (_modes[3] == null)
+		    _modes[3] = new CompositionMode (_canvas);
+			  
+			_canvas.changeMode (_modes[3]);
+		 }
 	  });
 	  
 	  _btnClass.addActionListener (new ActionListener () {
