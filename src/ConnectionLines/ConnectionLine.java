@@ -12,12 +12,12 @@ public class ConnectionLine {
 	protected final double PORTS_SIDE = 6;
 	private UMLObject _from;
 	private UMLObject _to;
-	protected Point[] _pairPoints;
+	protected Point[] _pairPorts;
        
     public ConnectionLine (UMLObject from, UMLObject to) {
       _from = from;
       _to = to;
-      _pairPoints = new Point[2];
+      _pairPorts = new Point[2];
     }
     
     public void paintLine (Graphics g) {
@@ -25,7 +25,7 @@ public class ConnectionLine {
       findShortestConnectionPorts ();
       
       for (int i = 0; i < 2; i++) {
-  	    Point point = _pairPoints[i];
+  	    Point point = _pairPorts[i];
   	    g2D.fill (new Rectangle.Double (point.getX() - PORTS_SIDE/2, point.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
   	  }
     }
@@ -52,13 +52,13 @@ public class ConnectionLine {
       	}
       }
         
-      _pairPoints = result;
+      _pairPorts = result;
     }
 
     public Point[] getPairPorts () {
-      if (_pairPoints == null) {
-    	_pairPoints = new Point[2];
+      if (_pairPorts == null) {
+    	_pairPorts = new Point[2];
       }
-      return _pairPoints;
+      return _pairPorts;
     }
 }

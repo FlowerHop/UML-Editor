@@ -21,8 +21,8 @@ public class AssociationLine extends ConnectionLine {
 	  super.paintLine (g);
 	  Graphics2D g2D = (Graphics2D) g;
 	  
-	  _line.setLine (_pairPoints [0].getX (), _pairPoints [0].getY (),
-			  _pairPoints [1].getX (), _pairPoints [1].getY ());
+	  _line.setLine (_pairPorts[0].getX (), _pairPorts[0].getY (),
+			  _pairPorts[1].getX (), _pairPorts[1].getY ());
 	  
 	  g2D.draw (_line);
 	}

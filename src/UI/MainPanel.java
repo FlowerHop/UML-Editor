@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import Modes.AssociationMode;
 import Modes.ClassMode;
+import Modes.GeneralizationMode;
 import Modes.Mode;
 import Modes.SelectMode;
 import Modes.UseCaseMode;
@@ -60,6 +61,16 @@ public class MainPanel extends JPanel {
 		    _modes[1] = new AssociationMode (_canvas);
 				
 		    _canvas.changeMode (_modes[1]);
+		  }
+	  });
+	  
+	  _btnGeneralization.addActionListener (new ActionListener () {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+		  if (_modes[2] == null)
+		    _modes[2] = new GeneralizationMode (_canvas);
+		  
+			_canvas.changeMode (_modes[2]);
 		  }
 	  });
 	  
