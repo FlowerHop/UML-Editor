@@ -19,16 +19,34 @@ import Modes.UseCaseMode;
 
 public class MainPanel extends JPanel {
 	private final int MODES_NUM = 6;
-	private JButton _btnSelect;
-    private JButton _btnAssociation;
-    private JButton _btnGeneralization;
-    private JButton _btnComposition;
-    private JButton _btnClass;
-    private JButton _btnUseCase;
+	
+	private final int MODE_SELECT = 0;
+	private final int MODE_ASSOCIATION = 1;
+	private final int MODE_GENERALIZATION = 2;
+	private final int MODE_COMPOSITION = 3;
+	private final int MODE_CLASS = 4;
+	private final int MODE_USE_CASE = 5;
+	
+	private JButton[] _btns = new JButton[MODES_NUM];
 
     private CanvasArea _canvas;
     
     private Mode[] _modes = new Mode[MODES_NUM];
+    
+    private ActionListener actionListener = new ActionListener () {
+	  @Override
+	  public void actionPerformed(ActionEvent e) {
+		int mode = -1;
+		
+	    for (int i = 0; i < MODES_NUM; i++) {
+	      if (e.getSource() == _btns[i]) {
+	    	mode = i;
+	      }
+	    }	
+	    
+	    _canvas.changeMode(_modes[mode]);
+	  }
+	};
     
 	public MainPanel () {
 		initComponents ();
@@ -36,72 +54,25 @@ public class MainPanel extends JPanel {
 	}
 	
 	private void initComponents () {
-	  _btnSelect = new JButton ("Select");
-	  _btnAssociation = new JButton ("Association Line");
-	  _btnGeneralization = new JButton ("Generalization Line");
-	  _btnComposition = new JButton ("Composition Line");
-	  _btnClass = new JButton ("Class");
-	  _btnUseCase = new JButton ("Use Case");
+	  _btns[MODE_SELECT] = new JButton ("Select");
+	  _btns[MODE_ASSOCIATION] = new JButton ("Association Line");
+	  _btns[MODE_GENERALIZATION] = new JButton ("Generalization Line");
+	  _btns[MODE_COMPOSITION] = new JButton ("Composition Line");
+	  _btns[MODE_CLASS] = new JButton ("Class");
+	  _btns[MODE_USE_CASE] = new JButton ("Use Case");
 	    
 	  _canvas = new CanvasArea ();
 	  
-	  _btnSelect.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-		  if (_modes[0] == null)
-			_modes[0] = new SelectMode (_canvas);
-			
-		  _canvas.changeMode (_modes[0]);
-		}
-	  });
+	  _modes[0] = new SelectMode (_canvas);
+	  _modes[1] = new AssociationMode (_canvas);
+	  _modes[2] = new GeneralizationMode (_canvas);
+	  _modes[3] = new CompositionMode (_canvas);
+	  _modes[4] = new ClassMode (_canvas);
+	  _modes[5] = new UseCaseMode (_canvas);
 	  
-	  _btnAssociation.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-		  if (_modes[1] == null)
-		    _modes[1] = new AssociationMode (_canvas);
-				
-		    _canvas.changeMode (_modes[1]);
-		  }
-	  });
-	  
-	  _btnGeneralization.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-		  if (_modes[2] == null)
-		    _modes[2] = new GeneralizationMode (_canvas);
-		  
-			_canvas.changeMode (_modes[2]);
-		  }
-	  });
-	  
-	  _btnComposition.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-		  if (_modes[3] == null)
-		    _modes[3] = new CompositionMode (_canvas);
-			  
-			_canvas.changeMode (_modes[3]);
-		 }
-	  });
-	  
-	  _btnClass.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-		  if (_modes[4] == null) 
-			_modes[4] = new ClassMode (_canvas);
-			_canvas.changeMode (_modes[4]);
-		}
-	  });
-	  
-	  _btnUseCase.addActionListener (new ActionListener () {
-		@Override
-		public void actionPerformed (ActionEvent e) {
-	   	  if (_modes[5] == null)
-		    _modes[5] = new UseCaseMode (_canvas);
-			_canvas.changeMode (_modes[5]);
-		}
-	  });
+	  for (int i = 0; i < MODES_NUM; i++) {
+		_btns[i].addActionListener (actionListener);
+	  }
 	}
 	
 	private void initLayoutConstraints () {
@@ -173,12 +144,16 @@ public class MainPanel extends JPanel {
 	    
 	  this.setLayout (gridBagLayout);
 	    
-	  this.add (_btnSelect, bagSelect);
-	  this.add (_btnAssociation, bagAssociation);
-	  this.add (_btnGeneralization, bagGeneralization);
-	  this.add (_btnComposition, bagComposition);
-	  this.add (_btnClass, bagClass);
-	  this.add (_btnUseCase, bagUseCase);
+	  this.add (_btns[MODE_SELECT], bagSelect);
+	  this.add (_btns[MODE_ASSOCIATION], bagAssociation);
+	  this.add (_btns[MODE_GENERALIZATION], bagGeneralization);
+	  this.add (_btns[MODE_COMPOSITION], bagComposition);
+	  this.add (_btns[MODE_CLASS], bagClass);
+	  this.add (_btns[MODE_USE_CASE], bagUseCase);
 	  this.add (_canvas, bagCanvas);
 	}
+    
+    public CanvasArea getCanvas () {
+      return _canvas;
+    }
 }
