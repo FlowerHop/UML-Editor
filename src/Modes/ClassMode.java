@@ -6,11 +6,14 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 import BasicObjects.ClassObject;
+import BasicObjects.UMLObject;
+import BasicObjects.UseCaseObject;
 import UI.CanvasArea;
 
 
 public class ClassMode extends Mode {
 	private CanvasArea _canvas;
+	private UMLObject _selectedUMLObject;
 	private int _pressX, _pressY;
 	
 	private final int _width = 100;
@@ -25,7 +28,8 @@ public class ClassMode extends Mode {
 	  _pressX = e.getX ();
 	  _pressY = e.getY ();
 	
-	  _canvas.drawObject (new ClassObject (_pressX, _pressY, _width, _height));
+	  _selectedUMLObject = new ClassObject (_pressX, _pressY, _width, _height);
+	  _canvas.drawObject (_selectedUMLObject);
 	  _canvas.repaint ();
 	}
 
@@ -53,5 +57,13 @@ public class ClassMode extends Mode {
         }
         
         _canvas.repaint ();
+	}
+	
+	@Override
+	public void eidtName(String name) {
+	  if (_selectedUMLObject != null) {
+		  _selectedUMLObject.setName (name);
+		_canvas.repaint ();
+	  }
 	}
 }

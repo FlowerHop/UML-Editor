@@ -65,12 +65,12 @@ public class MainPanel extends JPanel {
 	    
 	  _canvas = new CanvasArea ();
 	  
-	  _modes[0] = new SelectMode (_canvas);
-	  _modes[1] = new AssociationMode (_canvas);
-	  _modes[2] = new GeneralizationMode (_canvas);
-	  _modes[3] = new CompositionMode (_canvas);
-	  _modes[4] = new ClassMode (_canvas);
-	  _modes[5] = new UseCaseMode (_canvas);
+	  _modes[MODE_SELECT] = new SelectMode (_canvas);
+	  _modes[MODE_ASSOCIATION] = new AssociationMode (_canvas);
+	  _modes[MODE_GENERALIZATION] = new GeneralizationMode (_canvas);
+	  _modes[MODE_COMPOSITION] = new CompositionMode (_canvas);
+	  _modes[MODE_CLASS] = new ClassMode (_canvas);
+	  _modes[MODE_USE_CASE] = new UseCaseMode (_canvas);
 	  
 	  for (int i = 0; i < MODES_NUM; i++) {
 		_btns[i].addActionListener (actionListener);
@@ -156,7 +156,7 @@ public class MainPanel extends JPanel {
 	  this.add (_canvas, bagCanvas);
 	}
     
-    public CanvasArea getCanvas () {
-      return _canvas;
+    public void changeSelectedUMLObjectName (String name) {
+      _canvas.getCurrentMode ().eidtName (name);
     }
 }

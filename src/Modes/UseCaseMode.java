@@ -5,12 +5,14 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
+import BasicObjects.UMLObject;
 import BasicObjects.UseCaseObject;
 import UI.CanvasArea;
 
 
 public class UseCaseMode extends Mode {
 	private CanvasArea _canvas;
+	private UMLObject _selectedUMLObject;
 	private int _pressX, _pressY;
 	
 	private final int _width = 100;
@@ -25,7 +27,8 @@ public class UseCaseMode extends Mode {
 	  _pressX = e.getX ();
 	  _pressY = e.getY ();
 	  
-	  _canvas.drawObject (new UseCaseObject (_pressX, _pressY, _width, _height));
+	  _selectedUMLObject = new UseCaseObject (_pressX, _pressY, _width, _height);
+	  _canvas.drawObject (_selectedUMLObject);
 	  _canvas.repaint ();
 	}
 
@@ -53,5 +56,13 @@ public class UseCaseMode extends Mode {
         }
         
         _canvas.repaint ();
+	}
+	
+	@Override
+	public void eidtName(String name) {
+	  if (_selectedUMLObject != null) {
+		  _selectedUMLObject.setName (name);
+		_canvas.repaint ();
+	  }
 	}
 }

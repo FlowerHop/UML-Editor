@@ -68,4 +68,8 @@ public class UMLObject {
     public void setSelect (boolean isSelect) {
       _isSelected = isSelect;
     }
+    
+    public void setName (String name) {
+      
+    }
 }

@@ -42,4 +42,8 @@ public class UseCaseObject extends UMLObject {
 	  double textY = getY () + (getHeight ()/2 + textHeight/2);
 	  return new Point ((int) textX, (int) textY);
     }
+	
+    public void setName (String name) {
+      _name = name;
+    }
 }

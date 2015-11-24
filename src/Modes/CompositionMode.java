@@ -100,4 +100,12 @@ public class CompositionMode extends Mode {
 	    _canvas.setCursor (Cursor.getDefaultCursor ());      
 	  }
 	}
+	
+	@Override
+	public void eidtName(String name) {
+	  if (_pressedUMLObject != null) {
+		_pressedUMLObject.setName (name);
+		_canvas.repaint ();
+	  }
+	}
 }

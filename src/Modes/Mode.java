@@ -8,4 +8,5 @@ public abstract class Mode {
     public abstract void onDragged (MouseEvent e);
     public abstract void onReleased (MouseEvent e);
     public abstract void onMoved (MouseEvent e);
+    public abstract void eidtName (String name);
 }

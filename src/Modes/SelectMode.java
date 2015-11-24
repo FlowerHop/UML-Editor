@@ -77,4 +77,12 @@ public class SelectMode extends Mode {
         _canvas.setCursor (Cursor.getDefaultCursor ());      
       }
 	}
+
+	@Override
+	public void eidtName(String name) {
+	  if (_selectedUMLObject != null) {
+		_selectedUMLObject.setName (name);
+		_canvas.repaint ();
+	  }
+	}
 }

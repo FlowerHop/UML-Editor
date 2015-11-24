@@ -62,5 +62,9 @@ public class ClassObject extends UMLObject {
   	  double textY = getY () + (getHeight ()/(LINE_NUMBER + 1))/2 + textHeight/2;
   	  return new Point ((int) textX, (int) textY);
     }
+    
+    public void setName (String name) {
+      _name = name;
+    }
 }
 
