@@ -23,8 +23,6 @@ import Modes.Mode;
 
 public class CanvasArea extends JPanel {
 	private final double PORTS_SIDE = 6;
-	
-    private CanvasArea _canvas;
     
 	private Vector _umlObjects = new Vector ();
 	private Vector _umlLines = new Vector ();
@@ -34,7 +32,6 @@ public class CanvasArea extends JPanel {
     private Cursor _curCursor;
     
     public CanvasArea () {
-      _canvas = this;
       setBackground (Color.white);
       MyMouseListener listener = new MyMouseListener ();
       addMouseListener (listener);

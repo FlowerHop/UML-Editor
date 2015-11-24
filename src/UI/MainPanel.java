@@ -1,4 +1,5 @@
 package UI;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -35,16 +36,17 @@ public class MainPanel extends JPanel {
     
     private ActionListener actionListener = new ActionListener () {
 	  @Override
-	  public void actionPerformed(ActionEvent e) {
+	  public void actionPerformed (ActionEvent e) {
 		int mode = -1;
 		
 	    for (int i = 0; i < MODES_NUM; i++) {
-	      if (e.getSource() == _btns[i]) {
+	      if (e.getSource () == _btns[i]) {
 	    	mode = i;
-	      }
+	    	_btns[i].setBackground (Color.BLACK);
+	      } else _btns[i].setBackground (null);
 	    }	
 	    
-	    _canvas.changeMode(_modes[mode]);
+	    _canvas.changeMode (_modes[mode]);
 	  }
 	};
     
@@ -72,6 +74,7 @@ public class MainPanel extends JPanel {
 	  
 	  for (int i = 0; i < MODES_NUM; i++) {
 		_btns[i].addActionListener (actionListener);
+		_btns[i].setOpaque (true);
 	  }
 	}
 	
