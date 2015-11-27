@@ -19,7 +19,6 @@ public class ClassObject extends UMLObject {
     
     public ClassObject (int posX, int posY, int width, int height) {
       super (posX, posY, width, height);
-		
 	  _lines = new Line2D[LINE_NUMBER];
 	  _rect = new Rectangle2D.Double (getX (), getY (), getWidth (), getHeight ());
 	  

@@ -31,6 +31,8 @@ public class CanvasArea extends JPanel {
     
     private Cursor _curCursor;
     
+    private int currentDepth = 99;
+    
     public CanvasArea () {
       setBackground (Color.white);
       MyMouseListener listener = new MyMouseListener ();
@@ -55,6 +57,20 @@ public class CanvasArea extends JPanel {
       while (objects.hasMoreElements ()) {
         UMLObject each = (UMLObject) objects.nextElement ();
     	if (each.contains (x, y)) {
+    	  result.add(each);
+      	}
+      }
+      
+      return result;
+    }
+    
+    public Vector getContainedUMLObjects (Rectangle2D bounding) {
+      Vector result = new Vector ();
+      Enumeration objects = _umlObjects.elements ();
+      
+      while (objects.hasMoreElements ()) {
+        UMLObject each = (UMLObject) objects.nextElement ();
+    	if (each.contains (bounding)) {
     	  result.add(each);
       	}
       }
@@ -88,7 +104,9 @@ public class CanvasArea extends JPanel {
     
     public void drawObject (UMLObject obj) {
       if (obj != null) {
-    	_umlObjects.add (obj);
+    	obj.setDepth (currentDepth);
+    	_umlObjects.add(obj);
+    	currentDepth--;
       }
     }
     
@@ -97,7 +115,7 @@ public class CanvasArea extends JPanel {
     	_umlLines.add(line);
       }
     }
-        
+    
     class MyMouseListener extends MouseAdapter {
         public void mouseMoved (MouseEvent e) {
           if (_mode != null)

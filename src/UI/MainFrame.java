@@ -50,14 +50,28 @@ public class MainFrame extends JFrame {
       _unGroupItem = new MenuItem ("UnGroup");
       _changeNameItem = new MenuItem ("change object name");
       
-      _changeNameItem.addActionListener(new ActionListener () {
+      _groupItem.addActionListener (new ActionListener () {
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			String updatedName = JOptionPane.showInputDialog(null, "Edit name");
+		public void actionPerformed (ActionEvent e) {
+		  _mainPanel.toGroup ();
+		}
+      });
+      
+      _unGroupItem.addActionListener (new ActionListener () {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+		  _mainPanel.toUnGroup ();
+		}
+      });
+      
+      _changeNameItem.addActionListener (new ActionListener () {
+		@Override
+		public void actionPerformed (ActionEvent e) {
+		  String updatedName = JOptionPane.showInputDialog (null, "Edit name");
 			
-			if (updatedName != null) {
-		      _mainPanel.changeSelectedUMLObjectName (updatedName);
-			}
+		  if (updatedName != null) {
+		    _mainPanel.changeSelectedUMLObjectName (updatedName);
+	      }
 		}
 	  });
       

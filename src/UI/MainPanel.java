@@ -32,24 +32,6 @@ public class MainPanel extends JPanel {
 
     private CanvasArea _canvas;
     
-    private Mode[] _modes = new Mode[MODES_NUM];
-    
-    private ActionListener actionListener = new ActionListener () {
-	  @Override
-	  public void actionPerformed (ActionEvent e) {
-		int mode = -1;
-		
-	    for (int i = 0; i < MODES_NUM; i++) {
-	      if (e.getSource () == _btns[i]) {
-	    	mode = i;
-	    	_btns[i].setBackground (Color.BLACK);
-	      } else _btns[i].setBackground (null);
-	    }	
-	    
-	    _canvas.changeMode (_modes[mode]);
-	  }
-	};
-    
 	public MainPanel () {
 		initComponents ();
 		initLayoutConstraints ();
@@ -64,16 +46,9 @@ public class MainPanel extends JPanel {
 	  _btns[MODE_USE_CASE] = new JButton ("Use Case");
 	    
 	  _canvas = new CanvasArea ();
-	  
-	  _modes[MODE_SELECT] = new SelectMode (_canvas);
-	  _modes[MODE_ASSOCIATION] = new AssociationMode (_canvas);
-	  _modes[MODE_GENERALIZATION] = new GeneralizationMode (_canvas);
-	  _modes[MODE_COMPOSITION] = new CompositionMode (_canvas);
-	  _modes[MODE_CLASS] = new ClassMode (_canvas);
-	  _modes[MODE_USE_CASE] = new UseCaseMode (_canvas);
-	  
+	   
 	  for (int i = 0; i < MODES_NUM; i++) {
-		_btns[i].addActionListener (actionListener);
+		_btns[i].addActionListener (new UMLButtonListener ());
 		_btns[i].setOpaque (true);
 	  }
 	}
@@ -158,5 +133,41 @@ public class MainPanel extends JPanel {
     
     public void changeSelectedUMLObjectName (String name) {
       _canvas.getCurrentMode ().eidtName (name);
+    }
+    
+    public void toGroup () {
+    
+    }
+    
+    public void toUnGroup () {
+    	
+    }
+    
+    class UMLButtonListener implements ActionListener {
+    	private Mode[] _modes = new Mode[MODES_NUM];
+    	
+        public UMLButtonListener () {
+          _modes[MODE_SELECT] = new SelectMode (_canvas);
+      	  _modes[MODE_ASSOCIATION] = new AssociationMode (_canvas);
+      	  _modes[MODE_GENERALIZATION] = new GeneralizationMode (_canvas);
+      	  _modes[MODE_COMPOSITION] = new CompositionMode (_canvas);
+      	  _modes[MODE_CLASS] = new ClassMode (_canvas);
+      	  _modes[MODE_USE_CASE] = new UseCaseMode (_canvas);
+        }
+        
+		@Override
+		public void actionPerformed(ActionEvent e) {
+		  int mode = -1;
+		
+          for (int i = 0; i < MODES_NUM; i++) {
+	        if (e.getSource () == _btns[i]) {
+		      mode = i;
+		      _btns[i].setBackground (Color.BLACK);
+		    } else _btns[i].setBackground (null);
+		  }	
+		    
+		  _canvas.changeMode (_modes[mode]);
+		}
+    	
     }
 }

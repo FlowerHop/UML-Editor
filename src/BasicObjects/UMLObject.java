@@ -4,27 +4,33 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Vector;
 
 
-public class UMLObject {
+public class UMLObject implements Composite {
 	private final double PORTS_SIDE = 6;
+	private final int DEFAULT_DEPTH = 99;
 	private Rectangle2D _bounding;
 	private boolean _isSelected;
+	private Vector _children;
+	private int _depth = DEFAULT_DEPTH;
 	
 	public UMLObject (double posX, double posY, double width, double height) {
 	  _bounding = new Rectangle2D.Double (posX, posY, width, height);
+	  _children = new Vector ();
     }
 	
 	public void paintObject (Graphics g) {
+      Graphics2D g2D = (Graphics2D) g;
+	  g2D.clearRect ((int) _bounding.getX (), (int) _bounding.getY (), (int) _bounding.getWidth (), (int) _bounding.getHeight ());
+	
 	  if (_isSelected) {
-		Graphics2D g2D = (Graphics2D) g;  
 		Point[] ports = getConnectionPorts ();
 		
 		for (int i = 0; i < 4; i++) {
 		  Point port = ports[i];
 	      g2D.fill(new Rectangle.Double (port.getX() - PORTS_SIDE/2, port.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
 		}
-		
 	  }
 	}
 	
@@ -38,6 +44,19 @@ public class UMLObject {
 	  if (_bounding.contains (x, y)) {
 		return true;
 	  } else return false;
+	}
+	
+	public boolean contains (Rectangle2D bounding) {
+	  Point topLeft = new Point ((int) getX (), (int) getY ());
+	  Point topRight = new Point ((int) (getX () + getWidth ()), (int) getY ());
+	  Point bottomLeft = new Point ((int) getX (), (int) (getY () + getHeight ()));
+	  Point bottomRight = new Point ((int) (getX () + getWidth ()), (int) (getY () + getHeight ()));
+	  
+	  if (bounding.contains(topRight) && bounding.contains(topLeft) && bounding.contains(bottomLeft) && bounding.contains(bottomRight)) {
+		return true;
+	  }
+	  
+	  return false;
 	}
 	
 	public double getX () {
@@ -72,4 +91,31 @@ public class UMLObject {
     public void setName (String name) {
       
     }
+
+    public int getDepth () {
+      return _depth;
+    }
+    
+    public void setDepth (int depth) {
+      _depth = depth;
+    }
+    
+	@Override
+	public void toGroup(Composite... objs) {
+	  for (Composite obj : objs) {
+		_children.add (obj);
+	  }
+	}
+
+	@Override
+	public void toUnGroup() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return _children.size ();
+	}
 }
