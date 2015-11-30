@@ -6,6 +6,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import BasicObjects.Composable;
+import BasicObjects.Composite;
 import BasicObjects.UMLObject;
 import UI.CanvasArea;
 
@@ -13,11 +15,9 @@ import UI.CanvasArea;
 
 
 public class SelectMode extends Mode {
-	private Vector _selectedUMLObjects = new Vector ();
-	
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
-	private Vector _selectedComposite = new Vector ();
+	private Vector _selectedComposables = new Vector ();
 	
 	public SelectMode (CanvasArea canvas) {
 	  _canvas = canvas;
@@ -28,21 +28,21 @@ public class SelectMode extends Mode {
 	  _pressX = e.getX ();
   	  _pressY = e.getY ();
   	  
-  	  if (_selectedUMLObjects != null) {
-    	Enumeration cleanedObjects = _selectedUMLObjects.elements ();
+  	  if (_selectedComposables != null) {
+    	Enumeration cleanedObjects = _selectedComposables.elements ();
     	
     	while (cleanedObjects.hasMoreElements ()) {
-          UMLObject each = (UMLObject) cleanedObjects.nextElement ();
+          Composable each = (Composable) cleanedObjects.nextElement ();
           each.setSelect (false);
     	}
       }
   	  
-  	  _selectedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
+  	  _selectedComposables = _canvas.getContainedUMLObjects (_pressX, _pressY);
 	}
 
 	@Override
 	public void onDragged (MouseEvent e) {
-	  UMLObject selectedUMLObject = findFrontFromUMLObjects (_selectedUMLObjects);
+	  Composable selectedUMLObject = findFrontFromUMLObjects (_selectedComposables);
 	  
 	  if (selectedUMLObject != null) {
 		  int toX = e.getX ();
@@ -54,7 +54,7 @@ public class SelectMode extends Mode {
 	        
 	      _pressX = toX;
 	      _pressY = toY;
-	      selectedUMLObject.moveTo ((int) (originX + differenceX), (int) (originY + differenceY));
+	      selectedUMLObject.moveTo ((int) (differenceX), (int) (differenceY));
 	  }
        	  
       _canvas.repaint ();		
@@ -62,14 +62,14 @@ public class SelectMode extends Mode {
 
 	@Override
 	public void onReleased (MouseEvent e) {
-	  if (!_selectedUMLObjects.isEmpty ()) {  
-	  	UMLObject selectedUMLObject = findFrontFromUMLObjects (_selectedUMLObjects);
+	  if (!_selectedComposables.isEmpty ()) {  
+	  	Composable selectedUMLObject = findFrontFromUMLObjects (_selectedComposables);
 	      
-	  	_selectedUMLObjects = new Vector ();
+	  	_selectedComposables = new Vector ();
 	  	  
 	  	if (selectedUMLObject != null) {
 	  	  selectedUMLObject.setSelect (true);
-	 	  _selectedUMLObjects.add (selectedUMLObject);
+	  	  _selectedComposables.add (selectedUMLObject);
 	  	}
 	  } else {
 		Rectangle2D bounding = new Rectangle2D.Double();
@@ -80,11 +80,11 @@ public class SelectMode extends Mode {
 		Enumeration objects = containedUMLObjects.elements ();
 		  
 		while (objects.hasMoreElements ()) {
-		  UMLObject each = (UMLObject) objects.nextElement ();
+		  Composable each = (Composable) objects.nextElement ();
 		  each.setSelect (true);
 		}
 		  
-		_selectedUMLObjects = containedUMLObjects;  
+		_selectedComposables = containedUMLObjects;  
 	  }
 	 
 	  _canvas.repaint ();
@@ -103,22 +103,23 @@ public class SelectMode extends Mode {
         _canvas.setCursor (Cursor.getDefaultCursor ());      
       }
 	}
+	
 
 	@Override
 	public void eidtName(String name) {
-	  if (_selectedUMLObjects != null && _selectedUMLObjects.size () == 1) {
-		UMLObject object = (UMLObject) _selectedUMLObjects.get(0);
+	  if (_selectedComposables != null && _selectedComposables.size () == 1) {
+		UMLObject object = (UMLObject) _selectedComposables.get(0);
 		object.setName (name);
 		_canvas.repaint ();
 	  }
 	}
 
-    private UMLObject findFrontFromUMLObjects (Vector objectsVector) {
+    private Composable findFrontFromUMLObjects (Vector objectsVector) {
       Enumeration objects = objectsVector.elements ();
-      UMLObject result = null;
+      Composable result = null;
      
       while (objects.hasMoreElements ()) {
-    	UMLObject each = (UMLObject) objects.nextElement ();
+    	Composable each = (Composable) objects.nextElement ();
     	
     	if (result == null) {
     	  result = each;
@@ -129,4 +130,42 @@ public class SelectMode extends Mode {
       
       return result;
     }
+    
+    @Override
+    public void toGroup () {
+      Vector _totalComposables = _canvas.getComposables ();
+      Enumeration objects = _selectedComposables.elements ();
+      Composite newComposite = new Composite ();
+      
+      while (objects.hasMoreElements ()) {
+        Composable each = (Composable) objects.nextElement ();
+        newComposite.add (each);
+        _totalComposables.remove (each);
+      }
+    
+      _canvas.drawObject (newComposite);
+    }
+    
+    @Override
+    public void toUnGroup () {
+      if (_selectedComposables.size () == 1) {
+    	
+        Enumeration objects = _selectedComposables.elements ();
+        Composite object = (Composite) objects.nextElement();
+        
+        Vector composable = object.getAllComposable ();
+        objects = composable.elements ();
+        
+        while (objects.hasMoreElements ()) {
+          Composable each = (Composable) objects.nextElement ();
+          _canvas.drawObject (each);
+        }
+        
+        _canvas.getComposables ().remove (object);
+        
+      }
+
+    }
+
+	
 }

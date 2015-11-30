@@ -4,10 +4,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Enumeration;
 import java.util.Vector;
 
 
-public class UMLObject implements Composite {
+public class UMLObject implements Composable {
 	private final double PORTS_SIDE = 6;
 	private final int DEFAULT_DEPTH = 99;
 	private Rectangle2D _bounding;
@@ -35,9 +36,11 @@ public class UMLObject implements Composite {
 	}
 	
 	public void moveTo (int x, int y) {
+      double originX = _bounding.getX ();
+      double originY = _bounding.getY ();
 	  double width = _bounding.getWidth ();
 	  double height = _bounding.getHeight ();
-	  _bounding.setFrame (x, y, (int) width, (int) height);
+	  _bounding.setFrame (originX + x, originY + y, (int) width, (int) height);
 	} 
 	
 	public boolean contains (int x, int y) {
@@ -100,22 +103,4 @@ public class UMLObject implements Composite {
       _depth = depth;
     }
     
-	@Override
-	public void toGroup(Composite... objs) {
-	  for (Composite obj : objs) {
-		_children.add (obj);
-	  }
-	}
-
-	@Override
-	public void toUnGroup() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getSize() {
-		// TODO Auto-generated method stub
-		return _children.size ();
-	}
 }

@@ -136,11 +136,11 @@ public class MainPanel extends JPanel {
     }
     
     public void toGroup () {
-    
+      _canvas.getCurrentMode ().toGroup ();
     }
     
     public void toUnGroup () {
-    	
+      _canvas.getCurrentMode ().toUnGroup ();
     }
     
     class UMLButtonListener implements ActionListener {

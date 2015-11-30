@@ -9,4 +9,6 @@ public abstract class Mode {
     public abstract void onReleased (MouseEvent e);
     public abstract void onMoved (MouseEvent e);
     public abstract void eidtName (String name);
+    public void toGroup () {};
+    public void toUnGroup () {};
 }

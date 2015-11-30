@@ -14,6 +14,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import BasicObjects.Composable;
 import BasicObjects.UMLObject;
 import ConnectionLines.ConnectionLine;
 import Modes.Mode;
@@ -24,8 +25,9 @@ import Modes.Mode;
 public class CanvasArea extends JPanel {
 	private final double PORTS_SIDE = 6;
     
-	private Vector _umlObjects = new Vector ();
 	private Vector _umlLines = new Vector ();
+	
+	private Vector _umlComposables = new Vector ();
 	
 	private Mode _mode;
     
@@ -52,29 +54,30 @@ public class CanvasArea extends JPanel {
     
     public Vector getContainedUMLObjects (int x, int y) {
       Vector result = new Vector ();
-      Enumeration objects = _umlObjects.elements ();
-        
+      Enumeration objects = _umlComposables.elements ();
+          
       while (objects.hasMoreElements ()) {
-        UMLObject each = (UMLObject) objects.nextElement ();
-    	if (each.contains (x, y)) {
-    	  result.add(each);
-      	}
+        Composable each = (Composable) objects.nextElement ();
+          
+      	if (each.contains (x, y)) {
+          result.add(each);
+        }
       }
-      
+        
       return result;
     }
-    
+      
     public Vector getContainedUMLObjects (Rectangle2D bounding) {
       Vector result = new Vector ();
-      Enumeration objects = _umlObjects.elements ();
-      
+      Enumeration objects = _umlComposables.elements ();
+        
       while (objects.hasMoreElements ()) {
-        UMLObject each = (UMLObject) objects.nextElement ();
-    	if (each.contains (bounding)) {
-    	  result.add(each);
-      	}
+        Composable each = (Composable) objects.nextElement ();
+      	if (each.contains (bounding)) {
+      	  result.add(each);
+        }
       }
-       
+         
       return result;
     }
     
@@ -84,10 +87,10 @@ public class CanvasArea extends JPanel {
       Graphics2D g2D = (Graphics2D) g;
       g2D.clearRect (0, 0, (int) getBounds ().getWidth (),(int) getBounds ().getHeight ());
       
-      Enumeration objects = _umlObjects.elements ();
+      Enumeration objects = _umlComposables.elements ();
       
       while (objects.hasMoreElements ()) {
-    	UMLObject obj = (UMLObject) objects.nextElement ();
+    	Composable obj = (Composable) objects.nextElement ();
     	obj.paintObject (g2D);
       }
       
@@ -102,18 +105,28 @@ public class CanvasArea extends JPanel {
         setCursor (_curCursor);
     }
     
-    public void drawObject (UMLObject obj) {
-      if (obj != null) {
-    	obj.setDepth (currentDepth);
-    	_umlObjects.add(obj);
-    	currentDepth--;
-      }
+//    public void drawObject (UMLObject obj) {
+//      if (obj != null) {
+//    	obj.setDepth (currentDepth);
+//    	_umlObjects.add(obj);
+//    	currentDepth--;
+//      }
+//    }
+    
+    public void drawObject (Composable composable) {
+      composable.setDepth (currentDepth);
+      _umlComposables.add (composable);
+      currentDepth--;
     }
     
     public void drawLine (ConnectionLine line) {
       if (line != null) {
     	_umlLines.add(line);
       }
+    }
+    
+    public Vector getComposables () {
+      return _umlComposables;
     }
     
     class MyMouseListener extends MouseAdapter {
