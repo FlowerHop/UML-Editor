@@ -5,15 +5,16 @@ import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import BasicObjects.Composable;
 import BasicObjects.UMLObject;
 import ConnectionLines.AssociationLine;
+import ConnectionLines.CompositionLine;
 import ConnectionLines.GeneralizationLine;
 import UI.CanvasArea;
 
 public class GeneralizationMode extends Mode {
 	// maybe it doesn't need to be a global
-	private UMLObject _pressedUMLObject;
-	
+	private Vector _selectedUMLObjects = new Vector ();
 	private CanvasArea _canvas;
 	private int _pressX, _pressY;
 	private double _originUMLObjectX, _originUMLObjectY;
@@ -26,63 +27,64 @@ public class GeneralizationMode extends Mode {
 	public void onPressed(MouseEvent e) {
 	  _pressX = e.getX();
 	  _pressY = e.getY();
-	  Vector containedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
+	  _selectedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
       
-	  if (!containedUMLObjects.isEmpty ())
-	      _pressedUMLObject = (UMLObject) containedUMLObjects.get(0);
-      
-      if (_pressedUMLObject != null) {
-        _originUMLObjectX = _pressedUMLObject.getX();
-        _originUMLObjectY = _pressedUMLObject.getY();
-      }
+	  if (!_selectedUMLObjects.isEmpty ()) {
+		UMLObject selectedObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
+		_originUMLObjectX = selectedObject.getX ();
+        _originUMLObjectY = selectedObject.getY ();
+	  }
       
       _canvas.repaint ();
 	}
 
 	@Override
 	public void onDragged(MouseEvent e) {
-	  if (_pressedUMLObject != null) {
-		  int toX = e.getX ();
-	      int toY = e.getY ();
-	      int dragX = toX - _pressX;             
-	      int dragY = toY - _pressY;
-	      double originX = _pressedUMLObject.getX ();
-	      double originY = _pressedUMLObject.getY ();
+	  if (!_selectedUMLObjects.isEmpty ()) {
+		UMLObject selectedUMLObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
+		int toX = e.getX ();
+	    int toY = e.getY ();
+	    int differenceX = toX - _pressX;             
+	    int differenceY = toY - _pressY;
 	        
-	      _pressX = toX;
-	      _pressY = toY;
+	    _pressX = toX;
+	    _pressY = toY;
 	        
-	      _pressedUMLObject.move ((int) (originX + dragX), (int) (originY + dragY));
-	    }
+	    selectedUMLObject.move (differenceX, differenceY);
+	  } 
 	        	  
-	    _canvas.repaint ();	
+	  _canvas.repaint ();	
 	}
 
 	@Override
 	public void onReleased (MouseEvent e) {
-	  if (_pressedUMLObject != null) {
+	  if (!_selectedUMLObjects.isEmpty ()) {
+		UMLObject selectedUMLObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
 		int releaseX = e.getX ();
 		int releaseY = e.getY ();
 		Vector containedUMLObjects = _canvas.getContainedUMLObjects (releaseX, releaseY);
-		Enumeration objects = containedUMLObjects.elements ();
+		UMLObject releasedUMLObject = null;
 		
-		UMLObject _releasedUMLObject = null;
-		
-		while (objects.hasMoreElements ()) {
-		  UMLObject each = (UMLObject) objects.nextElement ();
-		  if (each != _pressedUMLObject) {
-			_releasedUMLObject = each;
-			break;
+		if (!containedUMLObjects.isEmpty ()) {
+		  releasedUMLObject = (UMLObject) findFrontFromComposables (containedUMLObjects);
+		  
+		  while (releasedUMLObject == selectedUMLObject && !containedUMLObjects.isEmpty ()) {
+			containedUMLObjects.remove (releasedUMLObject);
+			releasedUMLObject = null;
+			
+			if (containedUMLObjects.isEmpty ()) {
+			  break;
+			}
+			
+			releasedUMLObject = (UMLObject) findFrontFromComposables (containedUMLObjects);
 		  }
 		}
 		
-		_pressedUMLObject.move ((int) _originUMLObjectX, (int) _originUMLObjectY);
-		
-		if (_releasedUMLObject != null) {
-		  // create Generalization Line
-		  _canvas.drawLine (new GeneralizationLine (_pressedUMLObject, _releasedUMLObject));
+		if (releasedUMLObject != null) {
+		  _canvas.drawLine (new GeneralizationLine (selectedUMLObject, releasedUMLObject));
 		}
 		
+		selectedUMLObject.move ((int) (_originUMLObjectX - selectedUMLObject.getX ()), (int) (_originUMLObjectY - selectedUMLObject.getY ()));
 		_canvas.repaint ();
 	  }
 	}
@@ -92,9 +94,9 @@ public class GeneralizationMode extends Mode {
 	  int clickX = e.getX ();
 	  int clickY = e.getY ();
 	        
-      Vector containedUMLObjects = _canvas.getContainedUMLObjects (clickX, clickY);
+      Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
       
-      if (containedUMLObjects.size () != 0) {
+      if (containedComposables.size () != 0) {
 	    _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
 	  } else {
 	    _canvas.setCursor (Cursor.getDefaultCursor ());      
@@ -103,9 +105,13 @@ public class GeneralizationMode extends Mode {
 	
 	@Override
 	public void eidtName(String name) {
-	  if (_pressedUMLObject != null) {
-		_pressedUMLObject.setName (name);
-		_canvas.repaint ();
+	  if (_selectedUMLObjects.size () == 1) {
+		Composable composable = (Composable) _selectedUMLObjects.get (0);
+			
+		if (composable instanceof UMLObject) {
+		  ((UMLObject) composable).setName (name);
+		  _canvas.repaint ();
+		}
 	  }
 	}
 }

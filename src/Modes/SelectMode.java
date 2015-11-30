@@ -29,12 +29,12 @@ public class SelectMode extends Mode {
   	  _pressY = e.getY ();
   	  
   	  
-    	Enumeration cleanedObjects = _selectedComposables.elements ();
+      Enumeration cleanedObjects = _selectedComposables.elements ();
     	
-    	while (cleanedObjects.hasMoreElements ()) {
-          Composable each = (Composable) cleanedObjects.nextElement ();
-          each.setSelect (false);
-    	}
+      while (cleanedObjects.hasMoreElements ()) {
+        Composable each = (Composable) cleanedObjects.nextElement ();
+        each.setSelect (false);
+      }
       
   	  
   	  _selectedComposables = _canvas.getContainedComposables (_pressX, _pressY);
