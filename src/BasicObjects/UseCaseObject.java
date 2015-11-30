@@ -29,8 +29,8 @@ public class UseCaseObject extends UMLObject {
 	  g2D.drawString(_name, (int) textPosition.getX (), (int) textPosition.getY ());
 	}
 
-	public void moveTo (int x, int y) {
-	  super.moveTo (x, y);
+	public void move (int differenceX, int differenceY) {
+	  super.move (differenceX, differenceY);
 	  _ellipse.setFrame (getX (), getY (), getWidth (), getHeight ());
 	}
 	

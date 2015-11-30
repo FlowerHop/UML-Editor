@@ -35,12 +35,12 @@ public class UMLObject implements Composable {
 	  }
 	}
 	
-	public void moveTo (int x, int y) {
+	public void move (int differenceX, int differenceY) {
       double originX = _bounding.getX ();
       double originY = _bounding.getY ();
 	  double width = _bounding.getWidth ();
 	  double height = _bounding.getHeight ();
-	  _bounding.setFrame (originX + x, originY + y, (int) width, (int) height);
+	  _bounding.setFrame (originX + differenceX, originY + differenceY, (int) width, (int) height);
 	} 
 	
 	public boolean contains (int x, int y) {

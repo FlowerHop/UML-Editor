@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 public interface Composable {
 	public void paintObject (Graphics g);
-	public void moveTo (int x, int y);
+	public void move (int differenceX, int differenctY);
 	public boolean contains (int x, int y);
 	public boolean contains (Rectangle2D bounding);
     public void setSelect (boolean isSelect);

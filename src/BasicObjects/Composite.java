@@ -6,7 +6,9 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 public class Composite implements Composable {
+	private final int DEFAULT_DEPTH = 100;
     private Vector _composite = new Vector ();
+    private int _depth = DEFAULT_DEPTH;
     
 	public Composite () {
 		
@@ -28,12 +30,12 @@ public class Composite implements Composable {
 	}
 	
 	@Override
-	public void moveTo(int x, int y) {
+	public void move (int differenceX, int differenceY) {
 	  Enumeration objects = _composite.elements ();
 	  
 	  while (objects.hasMoreElements ()) {
 		Composable each = (Composable) objects.nextElement ();
-		each.moveTo (x, y);
+		each.move (differenceX, differenceY);
 	  }
 	}
 
@@ -88,28 +90,12 @@ public class Composite implements Composable {
 
 	@Override
 	public void setDepth(int depth) {
-	  Enumeration objects = _composite.elements ();
-	  
-	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
-		each.setDepth (depth);
-	  }
+	  _depth = depth;
 	}
 
 	@Override
 	public int getDepth() {
-	  int depth = 100;
-	  Enumeration objects = _composite.elements ();
-		  
-	  while (objects.hasMoreElements ()) {
-	    Composable each = (Composable) objects.nextElement ();
-	    int eachDepth = each.getDepth ();
-		if (depth > eachDepth) {
-		  depth = eachDepth;
-		}
-	  }
-		
-	  return depth;
+	  return _depth;
 	}
 
 	@Override

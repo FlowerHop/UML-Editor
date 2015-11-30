@@ -54,7 +54,7 @@ public class AssociationMode extends Mode {
 	      _pressX = toX;
 	      _pressY = toY;
 	        
-	      _pressedUMLObject.moveTo ((int) (originX + dragX), (int) (originY + dragY));
+	      _pressedUMLObject.move ((int) (originX + dragX), (int) (originY + dragY));
 	    }
 	        	  
 	    _canvas.repaint ();	
@@ -78,7 +78,7 @@ public class AssociationMode extends Mode {
 		  }
 		}
 		
-		_pressedUMLObject.moveTo ((int) _originUMLObjectX, (int) _originUMLObjectY);
+		_pressedUMLObject.move ((int) _originUMLObjectX, (int) _originUMLObjectY);
 		
 		if (_releasedUMLObject != null) {
 		  // create Association Line

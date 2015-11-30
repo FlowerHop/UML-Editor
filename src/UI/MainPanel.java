@@ -132,15 +132,33 @@ public class MainPanel extends JPanel {
 	}
     
     public void changeSelectedUMLObjectName (String name) {
-      _canvas.getCurrentMode ().eidtName (name);
+      Mode currentMode = _canvas.getCurrentMode ();
+      
+      if (currentMode == null) {
+    	return;
+      }
+      
+      currentMode.eidtName (name);
     }
     
     public void toGroup () {
-      _canvas.getCurrentMode ().toGroup ();
+      Mode currentMode = _canvas.getCurrentMode ();
+        
+      if (currentMode == null) {
+      	return;
+      }
+        
+      currentMode.toGroup ();
     }
     
     public void toUnGroup () {
-      _canvas.getCurrentMode ().toUnGroup ();
+      Mode currentMode = _canvas.getCurrentMode ();
+        
+      if (currentMode == null) {
+      	return;
+      }
+        
+      currentMode.toUnGroup ();
     }
     
     class UMLButtonListener implements ActionListener {

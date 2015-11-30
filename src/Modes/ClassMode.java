@@ -13,8 +13,7 @@ import UI.CanvasArea;
 
 public class ClassMode extends Mode {
 	private CanvasArea _canvas;
-	private UMLObject _selectedUMLObject;
-	private int _pressX, _pressY;
+	private UMLObject _selectedUMLObject = new ClassObject (0, 0, 0, 0);
 	
 	private final int _width = 100;
 	private final int _height = 75;
@@ -25,12 +24,7 @@ public class ClassMode extends Mode {
 	
 	@Override
 	public void onPressed (MouseEvent e) {
-	  _pressX = e.getX ();
-	  _pressY = e.getY ();
-	
-	  _selectedUMLObject = new ClassObject (_pressX, _pressY, _width, _height);
-	  _canvas.drawObject (_selectedUMLObject);
-	  _canvas.repaint ();
+		
 	}
 
 	@Override
@@ -40,7 +34,9 @@ public class ClassMode extends Mode {
 
 	@Override
 	public void onReleased (MouseEvent e) {
-		// TODO Auto-generated method stub
+	  _selectedUMLObject = new ClassObject (e.getX (), e.getY (), _width, _height);
+	  _canvas.drawComposable (_selectedUMLObject);
+	  _canvas.repaint ();
 	}
 
 	@Override
@@ -48,9 +44,9 @@ public class ClassMode extends Mode {
 		int clickX = e.getX ();
         int clickY = e.getY ();
        
-        Vector containedUMLObjects = _canvas.getContainedUMLObjects (clickX, clickY);
+        Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
         
-        if (!containedUMLObjects.isEmpty ()) {
+        if (!containedComposables.isEmpty ()) {
           _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
         } else {
           _canvas.setCursor (Cursor.getDefaultCursor ());      
@@ -61,9 +57,7 @@ public class ClassMode extends Mode {
 	
 	@Override
 	public void eidtName(String name) {
-	  if (_selectedUMLObject != null) {
-		  _selectedUMLObject.setName (name);
-		_canvas.repaint ();
-	  }
+	  _selectedUMLObject.setName (name);
+	  _canvas.repaint ();
 	}
 }

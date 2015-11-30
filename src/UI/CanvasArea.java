@@ -29,7 +29,7 @@ public class CanvasArea extends JPanel {
 	
 	private Vector _umlComposables = new Vector ();
 	
-	private Mode _mode;
+	private Mode _mode = null;
     
     private Cursor _curCursor;
     
@@ -52,7 +52,7 @@ public class CanvasArea extends JPanel {
       return _mode;
     }
     
-    public Vector getContainedUMLObjects (int x, int y) {
+    public Vector getContainedComposables (int x, int y) {
       Vector result = new Vector ();
       Enumeration objects = _umlComposables.elements ();
           
@@ -67,7 +67,7 @@ public class CanvasArea extends JPanel {
       return result;
     }
       
-    public Vector getContainedUMLObjects (Rectangle2D bounding) {
+    public Vector getContainedComposables (Rectangle2D bounding) {
       Vector result = new Vector ();
       Enumeration objects = _umlComposables.elements ();
         
@@ -78,6 +78,35 @@ public class CanvasArea extends JPanel {
         }
       }
          
+      return result;
+    }
+    
+    public Vector getContainedUMLObjects (int x, int y) {
+      Vector result = new Vector ();
+      Enumeration objects = _umlComposables.elements ();
+            
+      while (objects.hasMoreElements ()) {
+        Composable each = (Composable) objects.nextElement ();
+            
+        if (each.contains (x, y) && each instanceof UMLObject) {
+          result.add(each);
+        }
+      }
+          
+      return result;
+    }
+    
+    public Vector getContainedUMLObjects (Rectangle2D bounding) {
+      Vector result = new Vector ();
+      Enumeration objects = _umlComposables.elements ();
+          
+      while (objects.hasMoreElements ()) {
+        Composable each = (Composable) objects.nextElement ();
+        if (each.contains (bounding) && each instanceof UMLObject) {
+          result.add(each);
+        }
+      }
+           
       return result;
     }
     
@@ -105,18 +134,14 @@ public class CanvasArea extends JPanel {
         setCursor (_curCursor);
     }
     
-//    public void drawObject (UMLObject obj) {
-//      if (obj != null) {
-//    	obj.setDepth (currentDepth);
-//    	_umlObjects.add(obj);
-//    	currentDepth--;
-//      }
-//    }
-    
-    public void drawObject (Composable composable) {
+    public void drawComposable (Composable composable) {
       composable.setDepth (currentDepth);
       _umlComposables.add (composable);
       currentDepth--;
+    }
+    
+    public void removeComposable (Composable composable) {
+      _umlComposables.remove (composable);
     }
     
     public void drawLine (ConnectionLine line) {

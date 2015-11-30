@@ -43,8 +43,8 @@ public class ClassObject extends UMLObject {
 	  
 	}
 	
-	public void moveTo (int x, int y) {
-		super.moveTo (x, y);
+	public void move (int differenceX, int differenceY) {
+		super.move (differenceX, differenceY);
 		
 		for (int i = 0; i < _lines.length; i++) {
 		  _lines[i] = new Line2D.Double (getX (), getY () + ((double) getHeight ())*((double) (i + 1)/(LINE_NUMBER + 1)), 
