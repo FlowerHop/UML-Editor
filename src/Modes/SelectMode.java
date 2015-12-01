@@ -36,6 +36,7 @@ public class SelectMode extends Mode {
         each.setSelect (false);
       }
       
+      _canvas.repaint ();
   	  
   	  _selectedComposables = _canvas.getContainedComposables (_pressX, _pressY);
 	}
@@ -43,15 +44,15 @@ public class SelectMode extends Mode {
 	@Override
 	public void onDragged (MouseEvent e) {
 	  if (!_selectedComposables.isEmpty ()) {
-		  Composable selectedComposable = findFrontFromComposables (_selectedComposables);
-		  int toX = e.getX ();
-	      int toY = e.getY ();
-	      int differenceX = toX - _pressX;             
-	      int differenceY = toY - _pressY;
-	      _pressX = toX;
-	      _pressY = toY;
-	      selectedComposable.move ((int) (differenceX), (int) (differenceY));
-	      _canvas.repaint ();	
+		Composable selectedComposable = findFrontFromComposables (_selectedComposables);
+		int toX = e.getX ();
+	    int toY = e.getY ();
+	    int differenceX = toX - _pressX;             
+	    int differenceY = toY - _pressY;
+	    _pressX = toX;
+	    _pressY = toY;
+	    selectedComposable.move ((int) (differenceX), (int) (differenceY));
+	    _canvas.repaint ();	
 	  }
 	}
 
@@ -116,6 +117,7 @@ public class SelectMode extends Mode {
         while (objects.hasMoreElements ()) {
           Composable each = (Composable) objects.nextElement ();
           newComposite.add (each);
+          _canvas.removeComposable (each);
         }
         
         _canvas.drawComposable (newComposite);

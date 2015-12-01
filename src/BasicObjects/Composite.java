@@ -37,6 +37,7 @@ public class Composite implements Composable {
 		Composable each = (Composable) objects.nextElement ();
 		each.move (differenceX, differenceY);
 	  }
+	  
 	}
 
 	@Override

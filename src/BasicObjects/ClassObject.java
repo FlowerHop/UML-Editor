@@ -44,13 +44,14 @@ public class ClassObject extends UMLObject {
 	}
 	
 	public void move (int differenceX, int differenceY) {
-		super.move (differenceX, differenceY);
+	  super.move (differenceX, differenceY);
 		
-		for (int i = 0; i < _lines.length; i++) {
-		  _lines[i] = new Line2D.Double (getX (), getY () + ((double) getHeight ())*((double) (i + 1)/(LINE_NUMBER + 1)), 
-					getX () + getWidth (), getY () + ((double) getHeight ())*((double) (i + 1)/(LINE_NUMBER + 1)));	
-		}
-		_rect.setFrame (getX (), getY (), getWidth (), getHeight ());
+	  for (int i = 0; i < _lines.length; i++) {
+		_lines[i] = new Line2D.Double (getX (), getY () + ((double) getHeight ())*((double) (i + 1)/(LINE_NUMBER + 1)), 
+				getX () + getWidth (), getY () + ((double) getHeight ())*((double) (i + 1)/(LINE_NUMBER + 1)));	
+	  }
+	  
+	  _rect.setFrame (getX (), getY (), getWidth (), getHeight ());
 	}
 
     private Point findBestPositionOfText (Graphics2D g2D, String text) {
