@@ -6,14 +6,14 @@ import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
 import BasicObjects.ClassObject;
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 import BasicObjects.UseCaseObject;
 import UI.CanvasArea;
 
 
 public class UseCaseMode extends Mode {
 	private CanvasArea _canvas;
-	private UMLObject _selectedUMLObject = new UseCaseObject (0, 0, 0, 0);
+	private BasicObject _selectedUMLObject = new UseCaseObject (0, 0, 0, 0);
 	
 	private final int _width = 100;
 	private final int _height = 75;

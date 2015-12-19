@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 
-public class UMLObject implements Composable {
+public class BasicObject implements Composable {
 	private final double PORTS_SIDE = 6;
 	private final int DEFAULT_DEPTH = 99;
 	private Rectangle2D _bounding;
@@ -16,7 +16,7 @@ public class UMLObject implements Composable {
 	private Vector _children;
 	private int _depth = DEFAULT_DEPTH;
 	
-	public UMLObject (double posX, double posY, double width, double height) {
+	public BasicObject (double posX, double posY, double width, double height) {
 	  _bounding = new Rectangle2D.Double (posX, posY, width, height);
 	  _children = new Vector ();
     }

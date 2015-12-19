@@ -5,11 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Path2D;
 
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 import ConnectionLines.GeneralizationLine.GeneralizationLinePath;
 
 public class CompositionLine extends ConnectionLine {
-	public CompositionLine (UMLObject from, UMLObject to) {
+	public CompositionLine (BasicObject from, BasicObject to) {
 	  super (from, to);
 	}
 	

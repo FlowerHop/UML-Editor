@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import BasicObjects.Composable;
 import BasicObjects.Composite;
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 import UI.CanvasArea;
 
 
@@ -101,8 +101,8 @@ public class SelectMode extends Mode {
 	  if (_selectedComposables.size () == 1) {
 		Composable composable = (Composable) _selectedComposables.get (0);
 		
-		if (composable instanceof UMLObject) {
-		  ((UMLObject) composable).setName (name);
+		if (composable instanceof BasicObject) {
+		  ((BasicObject) composable).setName (name);
 		  _canvas.repaint ();
 		}
 	  }
@@ -122,7 +122,6 @@ public class SelectMode extends Mode {
         
         _canvas.drawComposable (newComposite);
       }
-      
     }
     
     @Override
@@ -132,7 +131,7 @@ public class SelectMode extends Mode {
         Enumeration objects = _selectedComposables.elements ();
         Composable headComposable = (Composable) _selectedComposables.firstElement ();
         
-        if (headComposable instanceof UMLObject) {
+        if (headComposable instanceof BasicObject) {
           return;
         }
         

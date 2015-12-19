@@ -15,7 +15,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import BasicObjects.Composable;
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 import ConnectionLines.ConnectionLine;
 import Modes.Mode;
 
@@ -88,7 +88,7 @@ public class CanvasArea extends JPanel {
       while (objects.hasMoreElements ()) {
         Composable each = (Composable) objects.nextElement ();
             
-        if (each.contains (x, y) && each instanceof UMLObject) {
+        if (each.contains (x, y) && each instanceof BasicObject) {
           result.add(each);
         }
       }
@@ -102,7 +102,7 @@ public class CanvasArea extends JPanel {
           
       while (objects.hasMoreElements ()) {
         Composable each = (Composable) objects.nextElement ();
-        if (each.contains (bounding) && each instanceof UMLObject) {
+        if (each.contains (bounding) && each instanceof BasicObject) {
           result.add(each);
         }
       }

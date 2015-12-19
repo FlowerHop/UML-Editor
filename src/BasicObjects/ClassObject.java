@@ -8,7 +8,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 
-public class ClassObject extends UMLObject {
+public class ClassObject extends BasicObject {
 	private final int LINE_NUMBER = 2;
     
     private Rectangle2D _rect;

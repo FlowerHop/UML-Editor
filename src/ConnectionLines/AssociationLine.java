@@ -6,12 +6,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 
 public class AssociationLine extends ConnectionLine {
 	private Line2D _line;
 
-	public AssociationLine (UMLObject from, UMLObject to) {
+	public AssociationLine (BasicObject from, BasicObject to) {
 	  super (from, to);
 	  _line = new Line2D.Double ();
 	}

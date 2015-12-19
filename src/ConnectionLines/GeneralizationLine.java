@@ -7,11 +7,11 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 
 public class GeneralizationLine extends ConnectionLine {
 	
-	public GeneralizationLine (UMLObject from, UMLObject to) {
+	public GeneralizationLine (BasicObject from, BasicObject to) {
 	  super (from, to);
 	}
 

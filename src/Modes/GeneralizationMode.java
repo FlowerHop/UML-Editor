@@ -6,7 +6,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import BasicObjects.Composable;
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 import ConnectionLines.AssociationLine;
 import ConnectionLines.CompositionLine;
 import ConnectionLines.GeneralizationLine;
@@ -30,7 +30,7 @@ public class GeneralizationMode extends Mode {
 	  _selectedUMLObjects = _canvas.getContainedUMLObjects (_pressX, _pressY);
       
 	  if (!_selectedUMLObjects.isEmpty ()) {
-		UMLObject selectedObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
+		BasicObject selectedObject = (BasicObject) findFrontFromComposables (_selectedUMLObjects);
 		_originUMLObjectX = selectedObject.getX ();
         _originUMLObjectY = selectedObject.getY ();
 	  }
@@ -41,7 +41,7 @@ public class GeneralizationMode extends Mode {
 	@Override
 	public void onDragged(MouseEvent e) {
 	  if (!_selectedUMLObjects.isEmpty ()) {
-		UMLObject selectedUMLObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
+		BasicObject selectedUMLObject = (BasicObject) findFrontFromComposables (_selectedUMLObjects);
 		int toX = e.getX ();
 	    int toY = e.getY ();
 	    int differenceX = toX - _pressX;             
@@ -59,14 +59,14 @@ public class GeneralizationMode extends Mode {
 	@Override
 	public void onReleased (MouseEvent e) {
 	  if (!_selectedUMLObjects.isEmpty ()) {
-		UMLObject selectedUMLObject = (UMLObject) findFrontFromComposables (_selectedUMLObjects);
+		BasicObject selectedUMLObject = (BasicObject) findFrontFromComposables (_selectedUMLObjects);
 		int releaseX = e.getX ();
 		int releaseY = e.getY ();
 		Vector containedUMLObjects = _canvas.getContainedUMLObjects (releaseX, releaseY);
-		UMLObject releasedUMLObject = null;
+		BasicObject releasedUMLObject = null;
 		
 		if (!containedUMLObjects.isEmpty ()) {
-		  releasedUMLObject = (UMLObject) findFrontFromComposables (containedUMLObjects);
+		  releasedUMLObject = (BasicObject) findFrontFromComposables (containedUMLObjects);
 		  
 		  while (releasedUMLObject == selectedUMLObject && !containedUMLObjects.isEmpty ()) {
 			containedUMLObjects.remove (releasedUMLObject);
@@ -76,7 +76,7 @@ public class GeneralizationMode extends Mode {
 			  break;
 			}
 			
-			releasedUMLObject = (UMLObject) findFrontFromComposables (containedUMLObjects);
+			releasedUMLObject = (BasicObject) findFrontFromComposables (containedUMLObjects);
 		  }
 		}
 		
@@ -108,8 +108,8 @@ public class GeneralizationMode extends Mode {
 	  if (_selectedUMLObjects.size () == 1) {
 		Composable composable = (Composable) _selectedUMLObjects.get (0);
 			
-		if (composable instanceof UMLObject) {
-		  ((UMLObject) composable).setName (name);
+		if (composable instanceof BasicObject) {
+		  ((BasicObject) composable).setName (name);
 		  _canvas.repaint ();
 		}
 	  }

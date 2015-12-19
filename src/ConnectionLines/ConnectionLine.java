@@ -6,15 +6,15 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
-import BasicObjects.UMLObject;
+import BasicObjects.BasicObject;
 
 public class ConnectionLine {
 	protected final double PORTS_SIDE = 6;
-	private UMLObject _from;
-	private UMLObject _to;
+	private BasicObject _from;
+	private BasicObject _to;
 	protected Point[] _pairPorts;
        
-    public ConnectionLine (UMLObject from, UMLObject to) {
+    public ConnectionLine (BasicObject from, BasicObject to) {
       _from = from;
       _to = to;
       _pairPorts = new Point[2];

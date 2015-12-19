@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.geom.Ellipse2D;
 
 
-public class UseCaseObject extends UMLObject {
+public class UseCaseObject extends BasicObject {
 	private Ellipse2D _ellipse;
 	private String _name = "Use Case";
     private final Font _FONT = new Font ("Serif", Font.BOLD, 14);
