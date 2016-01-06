@@ -125,23 +125,18 @@ public class CanvasArea extends JPanel {
         setCursor (_curCursor);
     }
     
-    public void drawComposable (Shape composable) {
-      composable.setDepth (currentDepth);
-      _umlShapes.add (composable);
+    public void drawShape (Shape shape) {
+      shape.setDepth (currentDepth);
+      _umlShapes.add (shape);
       currentDepth--;
     }
     
-    public void removeComposable (Shape composable) {
-      _umlShapes.remove (composable);
+    public void removeShape (Shape shape) {
+      _umlShapes.remove (shape);
     }
     
-    public void drawLine (ConnectionLine line) {
-      if (line != null) {
-    	_umlShapes.add(line);
-      }
-    }
     
-    public Vector getComposables () {
+    public Vector getShapes () {
       return _umlShapes;
     }
     

@@ -107,7 +107,7 @@ public class AssociationMode extends Mode {
 			}
 		  }
 		  
-		  _canvas.drawLine (new AssociationLine (head, tail));
+		  _canvas.drawShape (new AssociationLine (head, tail));
 		  
 		}
 	
@@ -132,10 +132,10 @@ public class AssociationMode extends Mode {
 	@Override
 	public void eidtName(String name) {
 	  if (_selectedUMLObjects.size () == 1) {
-		Shape composable = (Shape) _selectedUMLObjects.get (0);
+		Shape shape = (Shape) _selectedUMLObjects.get (0);
 			
-		if (composable instanceof BasicObject) {
-		  ((BasicObject) composable).setName (name);
+		if (shape instanceof BasicObject) {
+		  ((BasicObject) shape).setName (name);
 		  _canvas.repaint ();
 		}
 	  }

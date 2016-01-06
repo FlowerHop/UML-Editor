@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class GroupObject implements Shape {
 	private final int DEFAULT_DEPTH = 100;
-    private Vector _composite = new Vector ();
+    private Vector _shapes = new Vector ();
     private int _depth = DEFAULT_DEPTH;
     
 	public GroupObject () {
@@ -15,23 +15,23 @@ public class GroupObject implements Shape {
 	}
 	
 	public void add (Shape composable) {
-	  _composite.add (composable);
+	  _shapes.add (composable);
 	}
 	
-	public void remove (GroupObject composite) {
-	  Enumeration objects = composite.getAllComposable ().elements ();
+	public void remove (GroupObject groupObject) {
+	  Enumeration objects = groupObject.getAllShapes ().elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
-		_composite.add(each);
+		_shapes.add(each);
 	  }
 		
-	  _composite.remove(composite);
+	  _shapes.remove(groupObject);
 	}
 	
 	@Override
 	public void move (int differenceX, int differenceY) {
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 	  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
@@ -42,7 +42,7 @@ public class GroupObject implements Shape {
 
 	@Override
 	public boolean contains(int x, int y) {
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 	    Shape each = (Shape) objects.nextElement ();
@@ -57,7 +57,7 @@ public class GroupObject implements Shape {
 
 	@Override
 	public boolean contains(Rectangle2D bounding) {
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
@@ -71,7 +71,7 @@ public class GroupObject implements Shape {
 
 	@Override
 	public void setSelect(boolean isSelect) {
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
@@ -81,7 +81,7 @@ public class GroupObject implements Shape {
 
 	@Override
 	public void paintObject(Graphics g) {
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 	    Shape each = (Shape) objects.nextElement ();
@@ -102,7 +102,7 @@ public class GroupObject implements Shape {
 	@Override
 	public double getX() {
 	  double x = Integer.MAX_VALUE;
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 	  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
@@ -120,7 +120,7 @@ public class GroupObject implements Shape {
 	@Override
 	public double getY() {
 	  double y = Integer.MAX_VALUE;
-	  Enumeration objects = _composite.elements ();
+	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
 		Shape each = (Shape) objects.nextElement ();
@@ -134,7 +134,7 @@ public class GroupObject implements Shape {
 	  return y;
 	}
 	
-	public Vector getAllComposable () {
-	  return _composite;
+	public Vector getAllShapes () {
+	  return _shapes;
 	}
 }

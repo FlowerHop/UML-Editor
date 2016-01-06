@@ -35,7 +35,7 @@ public class ClassMode extends Mode {
 	@Override
 	public void onReleased (MouseEvent e) {
 	  _selectedUMLObject = new ClassObject (e.getX (), e.getY (), _width, _height);
-	  _canvas.drawComposable (_selectedUMLObject);
+	  _canvas.drawShape (_selectedUMLObject);
 	  _canvas.repaint ();
 	}
 

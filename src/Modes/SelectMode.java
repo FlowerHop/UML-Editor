@@ -117,10 +117,10 @@ public class SelectMode extends Mode {
         while (objects.hasMoreElements ()) {
           Shape each = (Shape) objects.nextElement ();
           newComposite.add (each);
-          _canvas.removeComposable (each);
+          _canvas.removeShape (each);
         }
         
-        _canvas.drawComposable (newComposite);
+        _canvas.drawShape (newComposite);
       }
     }
     
@@ -129,23 +129,23 @@ public class SelectMode extends Mode {
       if (_selectedComposables.size () == 1) {
     	
         Enumeration objects = _selectedComposables.elements ();
-        Shape headComposable = (Shape) _selectedComposables.firstElement ();
+        Shape headShape = (Shape) _selectedComposables.firstElement ();
         
-        if (headComposable instanceof BasicObject) {
+        if (headShape instanceof BasicObject) {
           return;
         }
         
-        GroupObject headCompoite = (GroupObject) _selectedComposables.firstElement ();
+        GroupObject headGroupObjects = (GroupObject) _selectedComposables.firstElement ();
         
-        Vector composable = headCompoite.getAllComposable ();
-        objects = composable.elements ();
+        Vector shapes = headGroupObjects.getAllShapes ();
+        objects = shapes.elements ();
         
         while (objects.hasMoreElements ()) {
           Shape each = (Shape) objects.nextElement ();
-          _canvas.drawComposable (each);
+          _canvas.drawShape (each);
         }
         
-        _canvas.getComposables ().remove (headCompoite);
+        _canvas.removeShape (headGroupObjects);
       }
     }
 }

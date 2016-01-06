@@ -105,7 +105,7 @@ public class GeneralizationMode extends Mode {
 		    }
 		  }
 		  
-		  _canvas.drawLine (new GeneralizationLine (head, tail));
+		  _canvas.drawShape (new GeneralizationLine (head, tail));
 		}
 		
 		_canvas.repaint ();
@@ -129,10 +129,10 @@ public class GeneralizationMode extends Mode {
 	@Override
 	public void eidtName(String name) {
 	  if (_selectedUMLObjects.size () == 1) {
-		Shape composable = (Shape) _selectedUMLObjects.get (0);
+		Shape shape = (Shape) _selectedUMLObjects.get (0);
 			
-		if (composable instanceof BasicObject) {
-		  ((BasicObject) composable).setName (name);
+		if (shape instanceof BasicObject) {
+		  ((BasicObject) shape).setName (name);
 		  _canvas.repaint ();
 		}
 	  }
