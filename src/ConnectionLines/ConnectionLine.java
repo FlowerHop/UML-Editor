@@ -7,58 +7,21 @@ import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
 import BasicObjects.BasicObject;
+import BasicObjects.Port;
 
 public class ConnectionLine {
-	protected final double PORTS_SIDE = 6;
-	private BasicObject _from;
-	private BasicObject _to;
-	protected Point[] _pairPorts;
-       
-    public ConnectionLine (BasicObject from, BasicObject to) {
-      _from = from;
-      _to = to;
-      _pairPorts = new Point[2];
+	protected Port _head;
+	protected Port _tail;
+    
+    public ConnectionLine (Port head, Port tail) {
+      _head = head;
+      _tail = tail;
     }
     
     public void paintLine (Graphics g) {
       Graphics2D g2D = (Graphics2D) g;
-      findShortestConnectionPorts ();
       
-      for (int i = 0; i < 2; i++) {
-  	    Point point = _pairPorts[i];
-  	    g2D.fill (new Rectangle.Double (point.getX() - PORTS_SIDE/2, point.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
-  	  }
-    }
-    
-    private void findShortestConnectionPorts () {
-      Point[] toConnectionPorts = _to.getConnectionPorts ();
-      Point[] fromConnectionPorts = _from.getConnectionPorts ();
-        
-  	  Point[] result = new Point[2];
-  	  double minDistance = -1;
-  	  
-      for (int i = 0; i < 4; i++) {
-      	for (int j = 0; j < 4; j++) {
-      	  double x1 = fromConnectionPorts[j].getX();
-       	  double y1 = fromConnectionPorts[j].getY();
-      	  double x2 = toConnectionPorts[i].getX();
-      	  double y2 = toConnectionPorts[i].getY();
-      	  double distance = Math.sqrt ((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
-      	  if (minDistance == -1 || distance < minDistance) {
-      		result[0] = new Point ((int) x1, (int) y1);
-      	    result[1] = new Point ((int) x2, (int) y2);
-      		minDistance = distance;
-      	  }
-      	}
-      }
-        
-      _pairPorts = result;
-    }
-
-    public Point[] getPairPorts () {
-      if (_pairPorts == null) {
-    	_pairPorts = new Point[2];
-      }
-      return _pairPorts;
+      g2D.fill(new Rectangle.Double (_head.getRelativeX () - _head.getPortSide ()/2, _head.getRelativeY () - _head.getPortSide ()/2, _head.getPortSide (), _head.getPortSide ()));
+      g2D.fill(new Rectangle.Double (_tail.getRelativeX () - _tail.getPortSide ()/2, _tail.getRelativeY () - _tail.getPortSide ()/2, _tail.getPortSide (), _tail.getPortSide ()));
     }
 }

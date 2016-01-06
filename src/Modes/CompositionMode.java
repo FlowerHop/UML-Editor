@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import BasicObjects.Composable;
 import BasicObjects.BasicObject;
+import BasicObjects.Port;
 import ConnectionLines.AssociationLine;
 import ConnectionLines.CompositionLine;
 import ConnectionLines.GeneralizationLine;
@@ -80,11 +81,32 @@ public class CompositionMode extends Mode {
 		  }
 		}
 		
+		selectedUMLObject.move ((int) (_originUMLObjectX - selectedUMLObject.getX ()), (int) (_originUMLObjectY - selectedUMLObject.getY ()));
+		
 		if (releasedUMLObject != null) {
-		  _canvas.drawLine (new CompositionLine (selectedUMLObject, releasedUMLObject));
+			Port[] selectedUMLObjectConnectionPorts = selectedUMLObject.getConnectionPorts ();
+			Port[] releasedUMLObjectConnectionPorts = releasedUMLObject.getConnectionPorts ();
+			  
+			Port head = null;
+			Port tail = null;
+			double minDistance = Double.MAX_VALUE;
+			  
+			for (int i = 0; i < 4; i++) {
+			  for (int j = 0; j < 4; j++) {
+				Port from = selectedUMLObjectConnectionPorts[i];
+				Port to = releasedUMLObjectConnectionPorts[j];
+				double distance = from.distanceTo (to);
+				if (distance < minDistance) {
+				  head = from;
+		      	  tail = to;
+		      	  minDistance = distance;
+		      	}
+			  }
+			}
+		  _canvas.drawLine (new CompositionLine (head, tail));
 		}
 		
-		selectedUMLObject.move ((int) (_originUMLObjectX - selectedUMLObject.getX ()), (int) (_originUMLObjectY - selectedUMLObject.getY ()));
+		
 		_canvas.repaint ();
 	  }
 	}

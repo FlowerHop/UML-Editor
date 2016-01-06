@@ -11,6 +11,7 @@ import java.util.Vector;
 import BasicObjects.ClassObject;
 import BasicObjects.Composable;
 import BasicObjects.BasicObject;
+import BasicObjects.Port;
 import ConnectionLines.AssociationLine;
 import UI.CanvasArea;
 
@@ -82,11 +83,34 @@ public class AssociationMode extends Mode {
 		  }
 		}
 		
-		if (releasedUMLObject != null) {
-		  _canvas.drawLine (new AssociationLine (selectedUMLObject, releasedUMLObject));
-		}
-		
 		selectedUMLObject.move ((int) (_originUMLObjectX - selectedUMLObject.getX ()), (int) (_originUMLObjectY - selectedUMLObject.getY ()));
+		
+		if (releasedUMLObject != null) {
+		  
+		  Port[] selectedUMLObjectConnectionPorts = selectedUMLObject.getConnectionPorts ();
+		  Port[] releasedUMLObjectConnectionPorts = releasedUMLObject.getConnectionPorts ();
+		  
+		  Port head = null;
+		  Port tail = null;
+		  double minDistance = Double.MAX_VALUE;
+		  
+		  for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+			  Port from = selectedUMLObjectConnectionPorts[i];
+			  Port to = releasedUMLObjectConnectionPorts[j];
+			  double distance = from.distanceTo (to);
+			  if (distance < minDistance) {
+				head = from;
+	      	    tail = to;
+	      		minDistance = distance;
+	      	  }
+			}
+		  }
+		  
+		  _canvas.drawLine (new AssociationLine (head, tail));
+		  
+		}
+	
 		_canvas.repaint ();
 	  }
 	}

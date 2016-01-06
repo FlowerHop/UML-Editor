@@ -6,10 +6,11 @@ import java.awt.Point;
 import java.awt.geom.Path2D;
 
 import BasicObjects.BasicObject;
+import BasicObjects.Port;
 import ConnectionLines.GeneralizationLine.GeneralizationLinePath;
 
 public class CompositionLine extends ConnectionLine {
-	public CompositionLine (BasicObject from, BasicObject to) {
+	public CompositionLine (Port from, Port to) {
 	  super (from, to);
 	}
 	
@@ -21,18 +22,18 @@ public class CompositionLine extends ConnectionLine {
 	}
 	
 	public Path2D createPath2D () {
-      return new CompositionLinePath (_pairPorts[0], _pairPorts[1]);
+      return new CompositionLinePath (_head, _tail);
 	}
 	
 	public class CompositionLinePath extends Path2D.Double {
 		private final double DIAMOND_SIDE = 15;
 		private final double TRIANGLE_HEIGHT = DIAMOND_SIDE * 6/7;
-		public CompositionLinePath (Point from, Point to) {
-		  double fromX = from.getX ();
-		  double fromY = from.getY ();
-		  double toX = to.getX ();
-		  double toY = to.getY ();
-		  double totalLength = from.distance(to);
+		public CompositionLinePath (Port from, Port to) {
+		  double fromX = from.getRelativeX ();
+		  double fromY = from.getRelativeY ();
+		  double toX = to.getRelativeX ();
+		  double toY = to.getRelativeY ();
+		  double totalLength = from.distanceTo(to);
 		  double lineLength = totalLength - TRIANGLE_HEIGHT;
 			    
 		  Point pointOfHeightOnLine = new Point ();

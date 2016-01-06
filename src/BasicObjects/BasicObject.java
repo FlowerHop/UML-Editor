@@ -9,16 +9,24 @@ import java.util.Vector;
 
 
 public class BasicObject implements Composable {
-	private final double PORTS_SIDE = 6;
+	private final int NORTH_PORT = 0;
+	private final int EAST_PORT = 1;
+	private final int WEST_PORT = 2;
+	private final int SOUTH_PORT = 3;
+	private final int PORT_NUMBER = 4;
+	
 	private final int DEFAULT_DEPTH = 99;
 	private Rectangle2D _bounding;
 	private boolean _isSelected;
 	private Vector _children;
 	private int _depth = DEFAULT_DEPTH;
 	
+	private Port[] _ports = new Port[PORT_NUMBER];
+	
 	public BasicObject (double posX, double posY, double width, double height) {
 	  _bounding = new Rectangle2D.Double (posX, posY, width, height);
 	  _children = new Vector ();
+	  initConnectionPorts ();
     }
 	
 	public void paintObject (Graphics g) {
@@ -26,11 +34,10 @@ public class BasicObject implements Composable {
 	  g2D.clearRect ((int) _bounding.getX (), (int) _bounding.getY (), (int) _bounding.getWidth (), (int) _bounding.getHeight ());
 	
 	  if (_isSelected) {
-		Point[] ports = getConnectionPorts ();
-		
 		for (int i = 0; i < 4; i++) {
-		  Point port = ports[i];
-	      g2D.fill(new Rectangle.Double (port.getX() - PORTS_SIDE/2, port.getY() - PORTS_SIDE/2, PORTS_SIDE, PORTS_SIDE));
+		  Port port = _ports[i];
+	      g2D.fill(new Rectangle.Double (port.getRelativeX() - port.getPortSide ()/2, port.getRelativeY() - port.getPortSide ()/2, port.getPortSide (), port.getPortSide ()));
+		  System.out.println (port.getRelativeX() + ", " + port.getRelativeY ());
 		}
 	  }
 	}
@@ -41,6 +48,10 @@ public class BasicObject implements Composable {
 	  double width = _bounding.getWidth ();
 	  double height = _bounding.getHeight ();
 	  _bounding.setFrame (originX + differenceX, originY + differenceY, (int) width, (int) height);
+	  
+	  for (int i = 0; i < PORT_NUMBER; i++) {
+		_ports[i].move (differenceX, differenceY);
+	  }
 	} 
 	
 	public boolean contains (int x, int y) {
@@ -78,13 +89,11 @@ public class BasicObject implements Composable {
 		return _bounding.getHeight ();
 	}
 	
-	public Point[] getConnectionPorts () {
-	  Point top = new Point ((int) (getX () + getWidth ()*0.5), (int) (getY ()));
-	  Point left = new Point ((int) (getX ()), (int) (getY () + getHeight ()*0.5));
-	  Point right = new Point ((int) (getX () + getWidth ()), (int) (getY () + getHeight ()*0.5));
-	  Point bottom = new Point ((int) (getX () + getWidth ()*0.5), (int) (getY () + getHeight ()));
-	  
-	  return new Point[] {top, left, right, bottom};
+	public void initConnectionPorts () {
+	  _ports[NORTH_PORT] = new Port (getX () + getWidth ()*0.5, getY ());
+	  _ports[EAST_PORT] = new Port (getX () + getWidth (), getY () + getHeight ()*0.5);
+	  _ports[WEST_PORT] = new Port (getX (), getY () + getHeight ()*0.5);
+	  _ports[SOUTH_PORT] = new Port (getX () + getWidth ()*0.5, getY () + getHeight ());
 	}
 
     public void setSelect (boolean isSelect) {
@@ -103,4 +112,7 @@ public class BasicObject implements Composable {
       _depth = depth;
     }
     
+    public Port[] getConnectionPorts () {
+      return _ports;
+    }
 }

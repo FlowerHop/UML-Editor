@@ -8,10 +8,11 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
 import BasicObjects.BasicObject;
+import BasicObjects.Port;
 
 public class GeneralizationLine extends ConnectionLine {
 	
-	public GeneralizationLine (BasicObject from, BasicObject to) {
+	public GeneralizationLine (Port from, Port to) {
 	  super (from, to);
 	}
 
@@ -23,18 +24,18 @@ public class GeneralizationLine extends ConnectionLine {
 	}
 	
 	public Path2D createPath2D () {
-      return new GeneralizationLinePath (_pairPorts[0], _pairPorts[1]);
+      return new GeneralizationLinePath (_head, _tail);
 	}
 	
 	public class GeneralizationLinePath extends Path2D.Double {
 		private final double TRIANGLE_SIDE = 15;
 		private final double TRIANGLE_HEIGHT = TRIANGLE_SIDE * Math.pow(3, 1/2)/2;
-		public GeneralizationLinePath (Point from, Point to) {
-		  double fromX = from.getX ();
-		  double fromY = from.getY ();
-		  double toX = to.getX ();
-		  double toY = to.getY ();
-		  double totalLength = from.distance(to);
+		public GeneralizationLinePath (Port from, Port to) {
+		  double fromX = from.getRelativeX ();
+		  double fromY = from.getRelativeY ();
+		  double toX = to.getRelativeX ();
+		  double toY = to.getRelativeY ();
+		  double totalLength = from.distanceTo (to);
 		  double lineLength = totalLength - TRIANGLE_HEIGHT;
 			    
 		  Point pointOfHeightOnLine = new Point ();
