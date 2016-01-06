@@ -24,10 +24,8 @@ import Modes.Mode;
 
 public class CanvasArea extends JPanel {
 	private final double PORTS_SIDE = 6;
-    
-	private Vector _umlLines = new Vector ();
 	
-	private Vector _umlComposables = new Vector ();
+	private Vector _umlShapes = new Vector ();
 	
 	private Mode _mode = null;
     
@@ -54,7 +52,7 @@ public class CanvasArea extends JPanel {
     
     public Vector getContainedComposables (int x, int y) {
       Vector result = new Vector ();
-      Enumeration objects = _umlComposables.elements ();
+      Enumeration objects = _umlShapes.elements ();
           
       while (objects.hasMoreElements ()) {
         Shape each = (Shape) objects.nextElement ();
@@ -69,7 +67,7 @@ public class CanvasArea extends JPanel {
       
     public Vector getContainedComposables (Rectangle2D bounding) {
       Vector result = new Vector ();
-      Enumeration objects = _umlComposables.elements ();
+      Enumeration objects = _umlShapes.elements ();
         
       while (objects.hasMoreElements ()) {
         Shape each = (Shape) objects.nextElement ();
@@ -83,7 +81,7 @@ public class CanvasArea extends JPanel {
     
     public Vector getContainedUMLObjects (int x, int y) {
       Vector result = new Vector ();
-      Enumeration objects = _umlComposables.elements ();
+      Enumeration objects = _umlShapes.elements ();
             
       while (objects.hasMoreElements ()) {
         Shape each = (Shape) objects.nextElement ();
@@ -98,7 +96,7 @@ public class CanvasArea extends JPanel {
     
     public Vector getContainedUMLObjects (Rectangle2D bounding) {
       Vector result = new Vector ();
-      Enumeration objects = _umlComposables.elements ();
+      Enumeration objects = _umlShapes.elements ();
           
       while (objects.hasMoreElements ()) {
         Shape each = (Shape) objects.nextElement ();
@@ -116,18 +114,11 @@ public class CanvasArea extends JPanel {
       Graphics2D g2D = (Graphics2D) g;
       g2D.clearRect (0, 0, (int) getBounds ().getWidth (),(int) getBounds ().getHeight ());
       
-      Enumeration objects = _umlComposables.elements ();
+      Enumeration objects = _umlShapes.elements ();
       
       while (objects.hasMoreElements ()) {
     	Shape obj = (Shape) objects.nextElement ();
     	obj.paintObject (g2D);
-      }
-      
-      Enumeration lines = _umlLines.elements ();
-      
-      while (lines.hasMoreElements()) {
-    	ConnectionLine line = (ConnectionLine) lines.nextElement ();
-    	line.paintLine (g2D);
       }
       
       if (_curCursor != null)
@@ -136,22 +127,22 @@ public class CanvasArea extends JPanel {
     
     public void drawComposable (Shape composable) {
       composable.setDepth (currentDepth);
-      _umlComposables.add (composable);
+      _umlShapes.add (composable);
       currentDepth--;
     }
     
     public void removeComposable (Shape composable) {
-      _umlComposables.remove (composable);
+      _umlShapes.remove (composable);
     }
     
     public void drawLine (ConnectionLine line) {
       if (line != null) {
-    	_umlLines.add(line);
+    	_umlShapes.add(line);
       }
     }
     
     public Vector getComposables () {
-      return _umlComposables;
+      return _umlShapes;
     }
     
     class MyMouseListener extends MouseAdapter {

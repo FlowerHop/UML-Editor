@@ -15,8 +15,8 @@ public class CompositionLine extends ConnectionLine {
 	}
 	
 	@Override
-	public void paintLine(Graphics g) {
-	  super.paintLine(g);
+	public void paintObject (Graphics g) {
+	  super.paintObject (g);
       Graphics2D g2D = (Graphics2D) g;
 	  g2D.draw (createPath2D ());
 	}
