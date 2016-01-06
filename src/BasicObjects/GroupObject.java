@@ -5,24 +5,24 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class Composite implements Composable {
+public class GroupObject implements Shape {
 	private final int DEFAULT_DEPTH = 100;
     private Vector _composite = new Vector ();
     private int _depth = DEFAULT_DEPTH;
     
-	public Composite () {
+	public GroupObject () {
 		
 	}
 	
-	public void add (Composable composable) {
+	public void add (Shape composable) {
 	  _composite.add (composable);
 	}
 	
-	public void remove (Composite composite) {
+	public void remove (GroupObject composite) {
 	  Enumeration objects = composite.getAllComposable ().elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 		_composite.add(each);
 	  }
 		
@@ -34,7 +34,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 	  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 		each.move (differenceX, differenceY);
 	  }
 	  
@@ -45,7 +45,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-	    Composable each = (Composable) objects.nextElement ();
+	    Shape each = (Shape) objects.nextElement ();
 	    
 	    if (each.contains (x, y)) {
 	      return true;
@@ -60,7 +60,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 		
 		if (each.contains (bounding)) {
 		      return true;
@@ -74,7 +74,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 		each.setSelect (isSelect);
 	  }
 	}
@@ -84,7 +84,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-	    Composable each = (Composable) objects.nextElement ();
+	    Shape each = (Shape) objects.nextElement ();
 		each.paintObject (g);
 	  }
 	}
@@ -105,7 +105,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 	  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 	    double eachX = each.getX ();
 	    
 		if (eachX < x) {
@@ -123,7 +123,7 @@ public class Composite implements Composable {
 	  Enumeration objects = _composite.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
-		Composable each = (Composable) objects.nextElement ();
+		Shape each = (Shape) objects.nextElement ();
 		double eachY = each.getY ();
 		    
 		if (eachY < y) {

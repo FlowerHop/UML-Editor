@@ -6,8 +6,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Composable;
-import BasicObjects.Composite;
+import BasicObjects.Shape;
+import BasicObjects.GroupObject;
 import BasicObjects.BasicObject;
 import UI.CanvasArea;
 
@@ -32,7 +32,7 @@ public class SelectMode extends Mode {
       Enumeration cleanedObjects = _selectedComposables.elements ();
     	
       while (cleanedObjects.hasMoreElements ()) {
-        Composable each = (Composable) cleanedObjects.nextElement ();
+        Shape each = (Shape) cleanedObjects.nextElement ();
         each.setSelect (false);
       }
       
@@ -44,7 +44,7 @@ public class SelectMode extends Mode {
 	@Override
 	public void onDragged (MouseEvent e) {
 	  if (!_selectedComposables.isEmpty ()) {
-		Composable selectedComposable = findFrontFromComposables (_selectedComposables);
+		Shape selectedComposable = findFrontFromComposables (_selectedComposables);
 		int toX = e.getX ();
 	    int toY = e.getY ();
 	    int differenceX = toX - _pressX;             
@@ -59,7 +59,7 @@ public class SelectMode extends Mode {
 	@Override
 	public void onReleased (MouseEvent e) {
 	  if (!_selectedComposables.isEmpty ()) {  
-	  	Composable selectedComposable = findFrontFromComposables (_selectedComposables);
+	  	Shape selectedComposable = findFrontFromComposables (_selectedComposables);
 	  	_selectedComposables = new Vector ();
 	  	selectedComposable.setSelect (true);
 	  	_selectedComposables.add (selectedComposable);
@@ -71,7 +71,7 @@ public class SelectMode extends Mode {
 		Enumeration objects = containedComposables.elements ();
 		  
 		while (objects.hasMoreElements ()) {
-		  Composable each = (Composable) objects.nextElement ();
+		  Shape each = (Shape) objects.nextElement ();
 		  each.setSelect (true);
 		}
 		  
@@ -99,7 +99,7 @@ public class SelectMode extends Mode {
 	@Override
 	public void eidtName (String name) {
 	  if (_selectedComposables.size () == 1) {
-		Composable composable = (Composable) _selectedComposables.get (0);
+		Shape composable = (Shape) _selectedComposables.get (0);
 		
 		if (composable instanceof BasicObject) {
 		  ((BasicObject) composable).setName (name);
@@ -112,10 +112,10 @@ public class SelectMode extends Mode {
     public void toGroup () {
       if (_selectedComposables.size () > 1) {
     	Enumeration objects = _selectedComposables.elements ();
-        Composite newComposite = new Composite ();
+        GroupObject newComposite = new GroupObject ();
           
         while (objects.hasMoreElements ()) {
-          Composable each = (Composable) objects.nextElement ();
+          Shape each = (Shape) objects.nextElement ();
           newComposite.add (each);
           _canvas.removeComposable (each);
         }
@@ -129,19 +129,19 @@ public class SelectMode extends Mode {
       if (_selectedComposables.size () == 1) {
     	
         Enumeration objects = _selectedComposables.elements ();
-        Composable headComposable = (Composable) _selectedComposables.firstElement ();
+        Shape headComposable = (Shape) _selectedComposables.firstElement ();
         
         if (headComposable instanceof BasicObject) {
           return;
         }
         
-        Composite headCompoite = (Composite) _selectedComposables.firstElement ();
+        GroupObject headCompoite = (GroupObject) _selectedComposables.firstElement ();
         
         Vector composable = headCompoite.getAllComposable ();
         objects = composable.elements ();
         
         while (objects.hasMoreElements ()) {
-          Composable each = (Composable) objects.nextElement ();
+          Shape each = (Shape) objects.nextElement ();
           _canvas.drawComposable (each);
         }
         

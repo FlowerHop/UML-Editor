@@ -8,7 +8,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 
-public class BasicObject implements Composable {
+public class BasicObject implements Shape {
 	private final int NORTH_PORT = 0;
 	private final int EAST_PORT = 1;
 	private final int WEST_PORT = 2;

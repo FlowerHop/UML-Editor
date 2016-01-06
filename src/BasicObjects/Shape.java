@@ -3,7 +3,7 @@ package BasicObjects;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-public interface Composable {
+public interface Shape {
 	public void paintObject (Graphics g);
 	public void move (int differenceX, int differenctY);
 	public boolean contains (int x, int y);

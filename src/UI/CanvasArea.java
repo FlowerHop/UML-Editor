@@ -14,7 +14,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import BasicObjects.Composable;
+import BasicObjects.Shape;
 import BasicObjects.BasicObject;
 import ConnectionLines.ConnectionLine;
 import Modes.Mode;
@@ -57,7 +57,7 @@ public class CanvasArea extends JPanel {
       Enumeration objects = _umlComposables.elements ();
           
       while (objects.hasMoreElements ()) {
-        Composable each = (Composable) objects.nextElement ();
+        Shape each = (Shape) objects.nextElement ();
           
       	if (each.contains (x, y)) {
           result.add(each);
@@ -72,7 +72,7 @@ public class CanvasArea extends JPanel {
       Enumeration objects = _umlComposables.elements ();
         
       while (objects.hasMoreElements ()) {
-        Composable each = (Composable) objects.nextElement ();
+        Shape each = (Shape) objects.nextElement ();
       	if (each.contains (bounding)) {
       	  result.add(each);
         }
@@ -86,7 +86,7 @@ public class CanvasArea extends JPanel {
       Enumeration objects = _umlComposables.elements ();
             
       while (objects.hasMoreElements ()) {
-        Composable each = (Composable) objects.nextElement ();
+        Shape each = (Shape) objects.nextElement ();
             
         if (each.contains (x, y) && each instanceof BasicObject) {
           result.add(each);
@@ -101,7 +101,7 @@ public class CanvasArea extends JPanel {
       Enumeration objects = _umlComposables.elements ();
           
       while (objects.hasMoreElements ()) {
-        Composable each = (Composable) objects.nextElement ();
+        Shape each = (Shape) objects.nextElement ();
         if (each.contains (bounding) && each instanceof BasicObject) {
           result.add(each);
         }
@@ -119,7 +119,7 @@ public class CanvasArea extends JPanel {
       Enumeration objects = _umlComposables.elements ();
       
       while (objects.hasMoreElements ()) {
-    	Composable obj = (Composable) objects.nextElement ();
+    	Shape obj = (Shape) objects.nextElement ();
     	obj.paintObject (g2D);
       }
       
@@ -134,13 +134,13 @@ public class CanvasArea extends JPanel {
         setCursor (_curCursor);
     }
     
-    public void drawComposable (Composable composable) {
+    public void drawComposable (Shape composable) {
       composable.setDepth (currentDepth);
       _umlComposables.add (composable);
       currentDepth--;
     }
     
-    public void removeComposable (Composable composable) {
+    public void removeComposable (Shape composable) {
       _umlComposables.remove (composable);
     }
     

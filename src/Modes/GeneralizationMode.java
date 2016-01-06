@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Composable;
+import BasicObjects.Shape;
 import BasicObjects.BasicObject;
 import BasicObjects.Port;
 import ConnectionLines.AssociationLine;
@@ -129,7 +129,7 @@ public class GeneralizationMode extends Mode {
 	@Override
 	public void eidtName(String name) {
 	  if (_selectedUMLObjects.size () == 1) {
-		Composable composable = (Composable) _selectedUMLObjects.get (0);
+		Shape composable = (Shape) _selectedUMLObjects.get (0);
 			
 		if (composable instanceof BasicObject) {
 		  ((BasicObject) composable).setName (name);

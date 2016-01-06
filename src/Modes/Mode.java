@@ -5,8 +5,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Composable;
-import BasicObjects.Composite;
+import BasicObjects.Shape;
+import BasicObjects.GroupObject;
 
 public abstract class Mode {
     public abstract void onPressed (MouseEvent e);
@@ -16,12 +16,12 @@ public abstract class Mode {
     public abstract void eidtName (String name);
     public void toGroup () {};
     public void toUnGroup () {};
-    protected Composable findFrontFromComposables (Vector objectsVector) {
+    protected Shape findFrontFromComposables (Vector objectsVector) {
       Enumeration objects = objectsVector.elements ();
-      Composable result = new Composite ();
+      Shape result = new GroupObject ();
        
       while (objects.hasMoreElements ()) {
-      	Composable each = (Composable) objects.nextElement ();
+      	Shape each = (Shape) objects.nextElement ();
       	
       	if (each.getDepth () < result.getDepth ()) {
           result = each;
