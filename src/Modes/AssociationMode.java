@@ -8,11 +8,11 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.ClassObject;
-import BasicObjects.Shape;
-import BasicObjects.BasicObject;
-import BasicObjects.Port;
-import ConnectionLines.AssociationLine;
+import Shape.Shape;
+import Shape.AssociationLine;
+import Shape.BasicObject;
+import Shape.ClassObject;
+import Shape.Port;
 import UI.CanvasArea;
 
 public class AssociationMode extends Mode {

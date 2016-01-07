@@ -1,4 +1,4 @@
-package BasicObjects;
+package Shape;
 
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;

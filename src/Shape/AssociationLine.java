@@ -1,13 +1,10 @@
-package ConnectionLines;
+package Shape;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
-
-import BasicObjects.BasicObject;
-import BasicObjects.Port;
 
 public class AssociationLine extends ConnectionLine {
 	private Line2D _line;

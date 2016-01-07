@@ -5,12 +5,12 @@ import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Shape;
-import BasicObjects.BasicObject;
-import BasicObjects.Port;
-import ConnectionLines.AssociationLine;
-import ConnectionLines.CompositionLine;
-import ConnectionLines.GeneralizationLine;
+import Shape.Shape;
+import Shape.AssociationLine;
+import Shape.BasicObject;
+import Shape.CompositionLine;
+import Shape.GeneralizationLine;
+import Shape.Port;
 import UI.CanvasArea;
 
 public class GeneralizationMode extends Mode {

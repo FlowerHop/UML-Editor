@@ -5,8 +5,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Shape;
-import BasicObjects.GroupObject;
+import Shape.GroupObject;
+import Shape.Shape;
 
 public abstract class Mode {
     public abstract void onPressed (MouseEvent e);

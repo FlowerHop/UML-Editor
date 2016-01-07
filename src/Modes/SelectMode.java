@@ -6,9 +6,9 @@ import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import BasicObjects.Shape;
-import BasicObjects.GroupObject;
-import BasicObjects.BasicObject;
+import Shape.Shape;
+import Shape.BasicObject;
+import Shape.GroupObject;
 import UI.CanvasArea;
 
 

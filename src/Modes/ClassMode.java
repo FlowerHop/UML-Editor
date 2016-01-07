@@ -5,9 +5,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.Vector;
 
-import BasicObjects.ClassObject;
-import BasicObjects.BasicObject;
-import BasicObjects.UseCaseObject;
+import Shape.BasicObject;
+import Shape.ClassObject;
+import Shape.UseCaseObject;
 import UI.CanvasArea;
 
 

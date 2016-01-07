@@ -14,10 +14,10 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import BasicObjects.Shape;
-import BasicObjects.BasicObject;
-import ConnectionLines.ConnectionLine;
+import Shape.Shape;
 import Modes.Mode;
+import Shape.BasicObject;
+import Shape.ConnectionLine;
 
 
 
