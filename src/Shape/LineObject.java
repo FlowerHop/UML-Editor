@@ -25,50 +25,36 @@ public class LineObject implements Shape {
 	}
 
 	@Override
-	public void move(int differenceX, int differenctY) {
-		// TODO Auto-generated method stub
-		
+	public void move (int differenceX, int differenctY) {}
+
+	@Override
+	public boolean contains (int x, int y) {
+	  return false;
 	}
 
 	@Override
-	public boolean contains(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean contains (Rectangle2D bounding) {
+	  return false;
 	}
 
 	@Override
-	public boolean contains(Rectangle2D bounding) {
-		// TODO Auto-generated method stub
-		return false;
+	public void setSelect (boolean isSelect) {}
+
+	@Override
+	public void setDepth (int depth) {}
+	
+	@Override
+	public int getDepth () {
+	  return 0;
 	}
 
 	@Override
-	public void setSelect(boolean isSelect) {
-		// TODO Auto-generated method stub
-		
+	public double getX () {
+	  return 0;
 	}
 
 	@Override
-	public void setDepth(int depth) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getDepth() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getY () {
+	  return 0;
 	}
 }

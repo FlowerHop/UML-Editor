@@ -37,11 +37,10 @@ public class GroupObject implements Shape {
 		Shape each = (Shape) objects.nextElement ();
 		each.move (differenceX, differenceY);
 	  }
-	  
 	}
 
 	@Override
-	public boolean contains(int x, int y) {
+	public boolean contains (int x, int y) {
 	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
@@ -56,7 +55,7 @@ public class GroupObject implements Shape {
 	}
 
 	@Override
-	public boolean contains(Rectangle2D bounding) {
+	public boolean contains (Rectangle2D bounding) {
 	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
@@ -70,7 +69,7 @@ public class GroupObject implements Shape {
 	}
 
 	@Override
-	public void setSelect(boolean isSelect) {
+	public void setSelect (boolean isSelect) {
 	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
@@ -80,7 +79,7 @@ public class GroupObject implements Shape {
 	}
 
 	@Override
-	public void paintObject(Graphics g) {
+	public void paintObject (Graphics g) {
 	  Enumeration objects = _shapes.elements ();
 		  
 	  while (objects.hasMoreElements ()) {
@@ -90,17 +89,17 @@ public class GroupObject implements Shape {
 	}
 
 	@Override
-	public void setDepth(int depth) {
+	public void setDepth (int depth) {
 	  _depth = depth;
 	}
 
 	@Override
-	public int getDepth() {
+	public int getDepth () {
 	  return _depth;
 	}
 
 	@Override
-	public double getX() {
+	public double getX () {
 	  double x = Integer.MAX_VALUE;
 	  Enumeration objects = _shapes.elements ();
 	  
@@ -116,9 +115,8 @@ public class GroupObject implements Shape {
 	  return x;
 	}
 	
-
 	@Override
-	public double getY() {
+	public double getY () {
 	  double y = Integer.MAX_VALUE;
 	  Enumeration objects = _shapes.elements ();
 		  

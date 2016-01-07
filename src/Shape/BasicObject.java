@@ -13,6 +13,7 @@ public class BasicObject implements Shape {
 	private final int EAST_PORT = 1;
 	private final int WEST_PORT = 2;
 	private final int SOUTH_PORT = 3;
+	
 	private final int PORT_NUMBER = 4;
 	
 	private final int DEFAULT_DEPTH = 99;
@@ -66,7 +67,7 @@ public class BasicObject implements Shape {
 	  Point bottomLeft = new Point ((int) getX (), (int) (getY () + getHeight ()));
 	  Point bottomRight = new Point ((int) (getX () + getWidth ()), (int) (getY () + getHeight ()));
 	  
-	  if (bounding.contains(topRight) && bounding.contains(topLeft) && bounding.contains(bottomLeft) && bounding.contains(bottomRight)) {
+	  if (bounding.contains (topRight) && bounding.contains(topLeft) && bounding.contains(bottomLeft) && bounding.contains(bottomRight)) {
 		return true;
 	  }
 	  
