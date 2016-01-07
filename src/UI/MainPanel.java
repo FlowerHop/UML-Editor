@@ -1,4 +1,4 @@
-package UI;
+ package UI;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,7 +30,7 @@ public class MainPanel extends JPanel {
 	
 	private JButton[] _btns = new JButton[MODES_NUM];
 
-    private CanvasArea _canvas;
+    private CanvasArea _canvas = CanvasArea.getInstance ();
     
 	public MainPanel () {
 		initComponents ();
@@ -44,8 +44,6 @@ public class MainPanel extends JPanel {
 	  _btns[MODE_COMPOSITION] = new JButton ("Composition Line");
 	  _btns[MODE_CLASS] = new JButton ("Class");
 	  _btns[MODE_USE_CASE] = new JButton ("Use Case");
-	    
-	  _canvas = new CanvasArea ();
 	   
 	  for (int i = 0; i < MODES_NUM; i++) {
 		_btns[i].addActionListener (new UMLButtonListener ());

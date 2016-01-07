@@ -24,14 +24,16 @@ public class MainFrame extends JFrame {
 	
     public MainFrame () {
         super ();
+        
+        addWindowListener (new WindowAdapter () {
+            public void windowClosing (WindowEvent e) {
+              System.exit (0);
+            }
+        });
+        
         initMenuBar ();
         _mainPanel = new MainPanel ();
         
-        addWindowListener (new WindowAdapter () {
-          public void windowClosing (WindowEvent e) {
-            System.exit (0);
-          }
-        });
         
         this.setContentPane (_mainPanel);
         

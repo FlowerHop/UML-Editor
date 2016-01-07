@@ -33,11 +33,21 @@ public class CanvasArea extends JPanel {
     
     private int currentDepth = 99;
     
-    public CanvasArea () {
+    private static CanvasArea uniqueInstance;
+    
+    private CanvasArea () {
       setBackground (Color.white);
       MyMouseListener listener = new MyMouseListener ();
       addMouseListener (listener);
       addMouseMotionListener (listener);
+    }
+    
+    public static CanvasArea getInstance () {
+      if (uniqueInstance == null) {
+    	uniqueInstance = new CanvasArea ();
+      }
+      
+      return uniqueInstance;
     }
     
     public void changeMode (Mode mode) {
