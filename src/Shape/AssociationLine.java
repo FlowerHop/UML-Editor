@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
-public class AssociationLine extends ConnectionLine {
+public class AssociationLine extends LineObject {
 	private Line2D _line;
 
 	public AssociationLine (Port from, Port to) {

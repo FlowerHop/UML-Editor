@@ -7,7 +7,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
-public class GeneralizationLine extends ConnectionLine {
+public class GeneralizationLine extends LineObject {
 	
 	public GeneralizationLine (Port from, Port to) {
 	  super (from, to);

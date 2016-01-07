@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import Shape.Shape;
 import Modes.Mode;
 import Shape.BasicObject;
-import Shape.ConnectionLine;
+import Shape.LineObject;
 
 
 

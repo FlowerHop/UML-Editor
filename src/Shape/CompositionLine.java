@@ -7,7 +7,7 @@ import java.awt.geom.Path2D;
 
 import Shape.GeneralizationLine.GeneralizationLinePath;
 
-public class CompositionLine extends ConnectionLine {
+public class CompositionLine extends LineObject {
 	public CompositionLine (Port from, Port to) {
 	  super (from, to);
 	}

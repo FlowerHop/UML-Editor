@@ -7,11 +7,11 @@ import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-public class ConnectionLine implements Shape {
+public class LineObject implements Shape {
 	protected Port _head;
 	protected Port _tail;
     
-    public ConnectionLine (Port head, Port tail) {
+    public LineObject (Port head, Port tail) {
       _head = head;
       _tail = tail;
     }
