@@ -1,5 +1,9 @@
 package UI;
 
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
@@ -8,10 +12,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import Modes.AssociationMode;
+import Modes.ClassMode;
+import Modes.CompositionMode;
+import Modes.GeneralizationMode;
+import Modes.Mode;
 import Modes.SelectMode;
+import Modes.UseCaseMode;
 
 public class MainFrame extends JFrame {
 	private MenuBar _menuBar = new MenuBar ();
@@ -23,23 +35,21 @@ public class MainFrame extends JFrame {
 	private MainPanel _mainPanel;
 	
     public MainFrame () {
-        super ();
+      super ();
         
-        addWindowListener (new WindowAdapter () {
-            public void windowClosing (WindowEvent e) {
-              System.exit (0);
-            }
-        });
+      addWindowListener (new WindowAdapter () {
+        public void windowClosing (WindowEvent e) {
+          System.exit (0);
+        }
+      });
         
-        initMenuBar ();
-        _mainPanel = new MainPanel ();
+      initMenuBar ();
+      _mainPanel = new MainPanel ();
         
+      this.setContentPane (_mainPanel);
         
-        this.setContentPane (_mainPanel);
-        
-        
-        this.setSize (1000, 600);
-        setVisible (true);
+      this.setSize (1000, 600);
+      setVisible (true);
     }
     
     public void initMenuBar () {
@@ -85,4 +95,4 @@ public class MainFrame extends JFrame {
       _menuBar.add (_edit);
       this.setMenuBar (_menuBar);
     }
-  }
+}

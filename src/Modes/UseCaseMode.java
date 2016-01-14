@@ -41,18 +41,18 @@ public class UseCaseMode extends Mode {
 
 	@Override
 	public void onMoved (MouseEvent e) {
-		int clickX = e.getX ();
-        int clickY = e.getY ();
+	  int clickX = e.getX ();
+      int clickY = e.getY ();
         
-        Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
+      Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
     
-        if (!containedComposables.isEmpty ()) {
-          _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-        } else {
-          _canvas.setCursor (Cursor.getDefaultCursor ());      
-        }
+      if (!containedComposables.isEmpty ()) {
+        _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
+      } else {
+        _canvas.setCursor (Cursor.getDefaultCursor ());      
+      }
         
-        _canvas.repaint ();
+      _canvas.repaint ();
 	}
 	
 	@Override
