@@ -38,7 +38,6 @@ public class BasicObject implements Shape {
 		for (int i = 0; i < 4; i++) {
 		  Port port = _ports[i];
 	      g2D.fill(new Rectangle.Double (port.getRelativeX() - port.getPortSide ()/2, port.getRelativeY() - port.getPortSide ()/2, port.getPortSide (), port.getPortSide ()));
-		  System.out.println (port.getRelativeX() + ", " + port.getRelativeY ());
 		}
 	  }
 	}

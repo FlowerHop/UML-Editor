@@ -15,9 +15,8 @@ import UI.CanvasArea;
 
 
 public class SelectMode extends Mode {
-	private CanvasArea _canvas;
-	private int _pressX, _pressY;
-	private Vector _selectedComposables = new Vector ();
+	//  private int _pressX, _pressY;
+	// private Vector _selectedComposables = new Vector ();
 	
 	public SelectMode (CanvasArea canvas) {
 	  _canvas = canvas;
@@ -25,127 +24,48 @@ public class SelectMode extends Mode {
 	
 	@Override
 	public void onPressed (MouseEvent e) {
-	  _pressX = e.getX ();
-  	  _pressY = e.getY ();
-  	  
-  	  
-      Enumeration cleanedObjects = _selectedComposables.elements ();
+      // clean the selected ports
+	  Enumeration cleanedObjects = _selectedShapes.elements ();
     	
-      while (cleanedObjects.hasMoreElements ()) {
-        Shape each = (Shape) cleanedObjects.nextElement ();
-        each.setSelect (false);
-      }
-      
-      _canvas.repaint ();
-  	  
-  	  _selectedComposables = _canvas.getContainedComposables (_pressX, _pressY);
+	  while (cleanedObjects.hasMoreElements ()) {
+	    Shape each = (Shape) cleanedObjects.nextElement ();
+	    each.setSelect (false);
+	  }
+	      
+	  _canvas.repaint ();
+	  
+	  super.onPressed (e);
 	}
 
 	@Override
 	public void onDragged (MouseEvent e) {
-	  if (!_selectedComposables.isEmpty ()) {
-		Shape selectedComposable = findFrontFromComposables (_selectedComposables);
-		int toX = e.getX ();
-	    int toY = e.getY ();
-	    int differenceX = toX - _pressX;             
-	    int differenceY = toY - _pressY;
-	    _pressX = toX;
-	    _pressY = toY;
-	    selectedComposable.move ((int) (differenceX), (int) (differenceY));
-	    _canvas.repaint ();	
-	  }
+	  super.onDragged (e);
 	}
 
 	@Override
 	public void onReleased (MouseEvent e) {
-	  if (!_selectedComposables.isEmpty ()) {  
-	  	Shape selectedComposable = findFrontFromComposables (_selectedComposables);
-	  	_selectedComposables = new Vector ();
-	  	selectedComposable.setSelect (true);
-	  	_selectedComposables.add (selectedComposable);
+	  super.onReleased (e);
+	  
+	  if (!_selectedShapes.isEmpty ()) {  
+	  	Shape selectedShape = findFrontFromShapes (_selectedShapes);
+	  	_selectedShapes = new Vector ();
+	  	selectedShape.setSelect (true);
+	  	_selectedShapes.add (selectedShape);
 	  } else {
 		Rectangle2D bounding = new Rectangle2D.Double();
-		bounding.setFrameFromDiagonal (_pressX, _pressY, e.getX (), e.getY ());
+		bounding.setFrameFromDiagonal (_pressX, _pressY, _releaseX, _releaseY);
 	
-		Vector containedComposables = _canvas.getContainedComposables (bounding);  
-		Enumeration objects = containedComposables.elements ();
+		Vector containedShapes = getContainedShapes (bounding);  
+		Enumeration objects = containedShapes.elements ();
 		  
 		while (objects.hasMoreElements ()) {
 		  Shape each = (Shape) objects.nextElement ();
 		  each.setSelect (true);
 		}
 		  
-		_selectedComposables = containedComposables;  
+		_selectedShapes = containedShapes;  
 	  }
 	 
 	  _canvas.repaint ();
 	}
-
-	@Override
-	public void onMoved (MouseEvent e) {
-	  int clickX = e.getX ();
-      int clickY = e.getY ();
-        
-      Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
-      
-      if (!containedComposables.isEmpty ()) { 
-        _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-      } else {
-        _canvas.setCursor (Cursor.getDefaultCursor ());      
-      }
-	}
-	
-
-	@Override
-	public void eidtName (String name) {
-	  if (_selectedComposables.size () == 1) {
-		Shape composable = (Shape) _selectedComposables.get (0);
-		
-		if (composable instanceof BasicObject) {
-		  ((BasicObject) composable).setName (name);
-		  _canvas.repaint ();
-		}
-	  }
-	}
-    
-    @Override
-    public void toGroup () {
-      if (_selectedComposables.size () > 1) {
-    	Enumeration objects = _selectedComposables.elements ();
-        GroupObject newComposite = new GroupObject ();
-          
-        while (objects.hasMoreElements ()) {
-          Shape each = (Shape) objects.nextElement ();
-          newComposite.add (each);
-          _canvas.removeShape (each);
-        }
-        
-        _canvas.drawShape (newComposite);
-      }
-    }
-    
-    @Override
-    public void toUnGroup () {
-      if (_selectedComposables.size () == 1) {
-    	
-        Enumeration objects = _selectedComposables.elements ();
-        Shape headShape = (Shape) _selectedComposables.firstElement ();
-        
-        if (headShape instanceof BasicObject) {
-          return;
-        }
-        
-        GroupObject headGroupObjects = (GroupObject) _selectedComposables.firstElement ();
-        
-        Vector shapes = headGroupObjects.getAllShapes ();
-        objects = shapes.elements ();
-        
-        while (objects.hasMoreElements ()) {
-          Shape each = (Shape) objects.nextElement ();
-          _canvas.drawShape (each);
-        }
-        
-        _canvas.removeShape (headGroupObjects);
-      }
-    }
 }

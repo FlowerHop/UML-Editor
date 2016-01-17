@@ -12,9 +12,6 @@ import UI.CanvasArea;
 
 
 public class ClassMode extends Mode {
-	private CanvasArea _canvas;
-	private BasicObject _selectedUMLObject = new ClassObject (0, 0, 0, 0);
-	
 	private final int _width = 100;
 	private final int _height = 75;
 
@@ -34,30 +31,15 @@ public class ClassMode extends Mode {
 
 	@Override
 	public void onReleased (MouseEvent e) {
-	  _selectedUMLObject = new ClassObject (e.getX (), e.getY (), _width, _height);
-	  _canvas.drawShape (_selectedUMLObject);
-	  _canvas.repaint ();
-	}
-
-	@Override
-	public void onMoved (MouseEvent e) {
-		int clickX = e.getX ();
-        int clickY = e.getY ();
-       
-        Vector containedComposables = _canvas.getContainedComposables (clickX, clickY);
-        
-        if (!containedComposables.isEmpty ()) {
-          _canvas.setCursor (Cursor.getPredefinedCursor (Cursor.HAND_CURSOR));
-        } else {
-          _canvas.setCursor (Cursor.getDefaultCursor ());      
-        }
-        
-        _canvas.repaint ();
-	}
-	
-	@Override
-	public void eidtName(String name) {
-	  _selectedUMLObject.setName (name);
-	  _canvas.repaint ();
+	  super.onReleased (e);
+	  BasicObject newObject = new ClassObject (_releaseX, _releaseY, _width, _height);
+	  _canvas.drawShape (newObject);
+	  _canvas.repaint ();  
+	  
+	  for (int i = 0; i < _selectedShapes.size(); i++) {
+		_selectedShapes.remove(0);
+	  }
+	  
+	  _selectedShapes.add (newObject);
 	}
 }

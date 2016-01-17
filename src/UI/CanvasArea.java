@@ -60,63 +60,8 @@ public class CanvasArea extends JPanel {
       return _mode;
     }
     
-    public Vector getContainedComposables (int x, int y) {
-      Vector result = new Vector ();
-      Enumeration objects = _umlShapes.elements ();
-          
-      while (objects.hasMoreElements ()) {
-        Shape each = (Shape) objects.nextElement ();
-          
-      	if (each.contains (x, y)) {
-          result.add(each);
-        }
-      }
-        
-      return result;
-    }
       
-    public Vector getContainedComposables (Rectangle2D bounding) {
-      Vector result = new Vector ();
-      Enumeration objects = _umlShapes.elements ();
-        
-      while (objects.hasMoreElements ()) {
-        Shape each = (Shape) objects.nextElement ();
-      	if (each.contains (bounding)) {
-      	  result.add(each);
-        }
-      }
-         
-      return result;
-    }
-    
-    public Vector getContainedUMLObjects (int x, int y) {
-      Vector result = new Vector ();
-      Enumeration objects = _umlShapes.elements ();
-            
-      while (objects.hasMoreElements ()) {
-        Shape each = (Shape) objects.nextElement ();
-            
-        if (each.contains (x, y) && each instanceof BasicObject) {
-          result.add(each);
-        }
-      }
-          
-      return result;
-    }
-    
-    public Vector getContainedUMLObjects (Rectangle2D bounding) {
-      Vector result = new Vector ();
-      Enumeration objects = _umlShapes.elements ();
-          
-      while (objects.hasMoreElements ()) {
-        Shape each = (Shape) objects.nextElement ();
-        if (each.contains (bounding) && each instanceof BasicObject) {
-          result.add(each);
-        }
-      }
-           
-      return result;
-    }
+   
     
     public void paint (Graphics g) {
       super.paint (g);
@@ -144,7 +89,6 @@ public class CanvasArea extends JPanel {
     public void removeShape (Shape shape) {
       _umlShapes.remove (shape);
     }
-    
     
     public Vector getShapes () {
       return _umlShapes;
