@@ -50,7 +50,7 @@ public class CanvasArea extends JPanel {
       return uniqueInstance;
     }
     
-    public void changeMode (Mode mode) {
+    public void setMode (Mode mode) {
       _mode = mode;
       // Clean the high light squares for SelectMode 
       repaint ();

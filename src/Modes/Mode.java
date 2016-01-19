@@ -22,7 +22,8 @@ public abstract class Mode {
       _pressY = e.getY ();
       _selectedShapes = getContainedShapes (_pressX, _pressY);
       _canvas.repaint ();
-    };
+    }
+    
     public void onDragged (MouseEvent e) {
       if (!_selectedShapes.isEmpty ()) {
         Shape selectedShape = findFrontFromShapes (_selectedShapes);

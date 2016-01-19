@@ -25,16 +25,19 @@ import Modes.Mode;
 import Modes.SelectMode;
 import Modes.UseCaseMode;
 
-public class MainFrame extends JFrame {
-	private MenuBar _menuBar = new MenuBar ();
+public class UMLEditor extends JFrame {
+	private int FRAME_WIDTH = 1000;
+	private int FRAME_HEIGHT = 600;
+	
+	private MenuBar _menuBar;
 	private Menu _file;
 	private Menu _edit;
 	private MenuItem _groupItem;
 	private MenuItem _unGroupItem;
 	private MenuItem _changeNameItem;
-	private MainPanel _mainPanel;
+	private UMLPanel _mainPanel;
 	
-    public MainFrame () {
+    public UMLEditor () {
       super ();
         
       addWindowListener (new WindowAdapter () {
@@ -42,17 +45,15 @@ public class MainFrame extends JFrame {
           System.exit (0);
         }
       });
-        
+      
+      initUMLPanel ();
       initMenuBar ();
-      _mainPanel = new MainPanel ();
         
-      this.setContentPane (_mainPanel);
-        
-      this.setSize (1000, 600);
+      this.setSize (FRAME_WIDTH, FRAME_HEIGHT);
       setVisible (true);
     }
     
-    public void initMenuBar () {
+    private void initMenuBar () {
       _menuBar = new MenuBar ();
         
       _file = new Menu ("File");
@@ -94,5 +95,10 @@ public class MainFrame extends JFrame {
       _menuBar.add (_file);
       _menuBar.add (_edit);
       this.setMenuBar (_menuBar);
+    }
+
+    private void initUMLPanel () {
+      _mainPanel = new UMLPanel ();
+      this.setContentPane (_mainPanel);
     }
 }

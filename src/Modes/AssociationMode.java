@@ -52,7 +52,8 @@ public class AssociationMode extends Mode {
 		BasicObject selectedBasicObject = null;
 		BasicObject releasedBasicObject = null;
 		
-		if (!(selectedShape instanceof GroupObject)) {
+		// it must be a BasicObject
+		if (selectedShape instanceof BasicObject) {
 		  selectedBasicObject = (BasicObject) selectedShape;
 		  Vector containedBaiscObjects = getContainedBasicObjects (_releaseX, _releaseY);
 			

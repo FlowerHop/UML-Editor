@@ -17,11 +17,11 @@ import Modes.Mode;
 import Modes.SelectMode;
 import Modes.UseCaseMode;
 
-public class MainPanel extends JPanel {
+public class UMLPanel extends JPanel {
 	private ButtonPanel _btnPanel;
 	private CanvasArea _canvas;
     
-	public MainPanel () {
+	public UMLPanel () {
       initComponents ();
 	  initLayoutConstraints ();
 	}
@@ -112,8 +112,8 @@ public class MainPanel extends JPanel {
       	  this.setOpaque (true);
         }
         
-        public void setMode (CanvasArea canvas) {
-          canvas.changeMode (_mode);
+        public void setMode () {
+          CanvasArea.getInstance ().setMode (_mode);
         }
     }
  
@@ -154,7 +154,7 @@ public class MainPanel extends JPanel {
 			      } else _umlBtns[i].setBackground (null);
 				}	
 				    
-		        _umlBtns[currentIndex].setMode (_canvas);
+		        _umlBtns[currentIndex].setMode ();
 			  }
         	});
           }
